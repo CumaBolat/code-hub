@@ -1,0 +1,69 @@
+#output {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  font-size: 14px;
+  color: #adfde2;
+  background-color: #000000;
+  font-family: 'Courier New', Courier, monospace;
+  padding: 10px;
+  border: none;
+  resize: none;
+}
+.output-div {
+  width: 75vw;
+  height: 13vw;
+  overflow: auto;
+  padding: 10px;
+  background-color: #ffffff7e;
+  color: #ffffff;
+}
+
+.buttons {
+  display: flex; 
+  align-items: center;
+  width: 75vw;
+}
+
+#button {
+  color: #a7373794(180, 155, 43);
+  background-color: #333442b0; /* Green */
+  border: none;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  flex-grow: 1;
+  cursor: pointer;
+  transition-duration: 0.4s;
+}
+
+#button:hover {
+  background-color: #f54d4d;
+}
+
+.output-div > div > div:last-child {
+  background-color: #282C34;
+  color: #D4D4D4;
+  font-family: 'Courier New', monospace;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  box-sizing: border-box;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.color-green-500 {
+  color: #6A9955; /* Green text */
+}
+
+.color-analytics-default {
+  color: #569CD6; /* Blue text */
+}
+
+.color-white-300 {
+  color: #D4D4D4; /* Light grey text */
+}

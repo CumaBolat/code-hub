@@ -1,0 +1,81 @@
+.browser {
+  width: 25vw;
+  height: 100vh;
+  background-color: rgb(0, 0, 0);
+  margin: 0 auto;
+  color: white;
+}
+
+#browser-header {
+  width: 100%;
+  background-color: #3b463c;
+  color: white;
+  text-align: center;
+  font-size: 20px;
+  padding: 10px 0;
+}
+
+.list-button {
+  text-align: left;
+  background-color: #000000;
+  margin-top: 10px;
+  color: white;
+  padding: 10px 24px;
+  border: 1px solid #3b463c;
+  cursor: pointer;
+  width: 50%;
+  opacity: 0.9;
+}
+
+.list-button:hover {
+  opacity: 1;
+}
+
+.create-file-button {
+  width: 15%;
+  height: fit-content;
+  background-color: #3b463c;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  padding: 5px 5px;
+  font-size: 12px;
+  margin-left: 150px; /* push the button to the right */
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+
+.file-button {
+  width: 15%;
+  height: fit-content;
+  background-color: #3b463c;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin-left: 20px;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+input[type="text"] {
+  width: 45%;
+  height: fit-content;
+  background-color: #3b463c;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin-left: 20px;
+  margin-top: 5px;
+  cursor: pointer;
+}
