@@ -29,7 +29,7 @@ function Terminal({ setWs, ws, code, getFilesList }) {
       return;
     }
 
-    const stompClient = Stomp.client('ws://localhost:8080/socket');
+    const stompClient = Stomp.client('ws://localhost:5000/socket');
 
     stompClient.connect({}, function (frame) {
       stompClient.subscribe('/editor/output', function (code) {
@@ -56,7 +56,7 @@ function Terminal({ setWs, ws, code, getFilesList }) {
 
   const createContainer = () => {
     if (ws && ws.connected) {
-      fetch('http://localhost:8080/handleDockerContainer', { method: 'POST' })
+      fetch('http://localhost:5000/handleDockerContainer', { method: 'POST' })
         .catch((error) => {
           console.error('Error:', error);
         });

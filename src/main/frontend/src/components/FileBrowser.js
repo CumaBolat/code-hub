@@ -12,7 +12,7 @@ function FileBrowser( { setWs, ws, code, setCode, getFilesList, files}) {
   };
   
   const openFile = (file) => {
-    fetch('http://localhost:8080/openFile', { method: 'POST', body: file })
+    fetch('http://localhost:5000/openFile', { method: 'POST', body: file })
       .then(response => response.text())
       .then(data => setCode(data))
       .catch((error) => {
@@ -21,7 +21,7 @@ function FileBrowser( { setWs, ws, code, setCode, getFilesList, files}) {
   };
 
   const createFile = (fileName) => {
-    fetch('http://localhost:8080/createFile', { method: 'POST', body: JSON.stringify(fileName)})
+    fetch('http://localhost:5000/createFile', { method: 'POST', body: JSON.stringify(fileName)})
       .then(response => response.text())
       .then(data => setCode(data))
       .catch((error) => {

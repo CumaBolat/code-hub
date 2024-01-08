@@ -19,7 +19,7 @@ function Combiner() {
   const [files, setFiles] = useState([]);
 
   const getFilesList = () => {
-    fetch('http://localhost:8080/getFilesList', { method: 'GET' })
+    fetch('http://localhost:5000/getFilesList', { method: 'GET' })
         .then(response => response.json())
         .then(data => setFiles(data))
         .catch((error) => {
