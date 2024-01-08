@@ -1,8 +1,7 @@
 package tr.mu.posta.cuma.ide.repos;
 
-import org.springframework.data.repository.CrudRepository;
 import tr.mu.posta.cuma.ide.models.User;
 
-public interface UserRepository extends CrudRepository<User, Integer>{
+public interface UserRepository {
   User findByUsername(String username);
 }
