@@ -29,7 +29,7 @@ function Terminal({ setWs, ws, code, getFilesList }) {
       return;
     }
 
-    const stompClient = Stomp.client('ws://localhost:5000/socket');
+    const stompClient = Stomp.client('ws://cumabolat-online-ide.eu-central-1.elasticbeanstalk.com/socket');
 
     stompClient.connect({}, function (frame) {
       stompClient.subscribe('/editor/output', function (code) {
