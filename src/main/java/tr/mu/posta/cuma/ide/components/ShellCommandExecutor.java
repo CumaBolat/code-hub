@@ -12,9 +12,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class ShellCommandExecutor {
 
-  @Value("${sudo.password}")
-  private String password;
-
   public String executeShellCommand(String command) {
     StringBuilder output = new StringBuilder();
     StringBuilder error = new StringBuilder();
@@ -24,8 +21,8 @@ public class ShellCommandExecutor {
     try {
       Process process = processBuilder.start();
 
-      if (command.startsWith("sudo"))
-        this.enterPassword(process);
+      // if (command.startsWith("sudo"))
+      //   this.enterPassword(process);
 
       BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
       BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
@@ -58,13 +55,13 @@ public class ShellCommandExecutor {
     return (output.length() == 0 && error.length() == 0);
   }
 
-  private void enterPassword(Process process) {
-    try {
-      BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
-      writer.write(this.password + "\n");
-      writer.flush();
-    } catch (IOException e) {
-      throw new RuntimeException("Failed to enter password", e);
-    }
-  }
+  // private void enterPassword(Process process) {
+  //   try {
+  //     BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
+  //     writer.write(this.password + "\n");
+  //     writer.flush();
+  //   } catch (IOException e) {
+  //     throw new RuntimeException("Failed to enter password", e);
+  //   }
+  // }
 }

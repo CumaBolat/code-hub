@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -16,13 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import tr.mu.posta.cuma.ide.models.Code;
 import tr.mu.posta.cuma.ide.repos.CommandBuilder;
 import tr.mu.posta.cuma.ide.components.Docker;
-import tr.mu.posta.cuma.ide.components.DockerSingleton;
 import tr.mu.posta.cuma.ide.components.GeneralCommandBuilder;
 
 @Controller
 public class EditorController {
 
-  private final Docker docker = DockerSingleton.getInstance();
   private final CommandBuilder commandBuilder = new GeneralCommandBuilder();
   private long lastActivityTime = System.currentTimeMillis();
 
@@ -31,6 +28,9 @@ public class EditorController {
 
   @Autowired
   private SimpMessagingTemplate template;
+
+  @Autowired
+  private Docker docker;
 
   @MessageMapping("/editor")
   @SendTo("/editor/output")
@@ -63,24 +63,26 @@ public class EditorController {
     this.docker.saveJavaCode(code.getCode(), className);
   }
 
-  @PostMapping("/handleDockerContainer")
-  public ResponseEntity<Void> handleCreateDockerContainer() {
-    if (this.docker.isContainerRunning()) {
+  @PostMapping("/handleUserWorkspace")
+  public ResponseEntity<Void> handleUserWorkspace() {
+    if (this.docker.doesUserWorkspaceExist()) {
       this.template.convertAndSend("/editor/output", "Docker container already running");
       return ResponseEntity.ok().build();
     }
 
-    this.docker.startContainer();
-    this.template.convertAndSend("/editor/output", "Docker container started " + this.docker.getContainerName());
+    this.docker.createUserWorkspace();
+    this.template.convertAndSend("/editor/output", "workspace created " + this.docker.getUserWorkspaceName());
     return ResponseEntity.ok().build();
   }  
 
   @Scheduled(fixedRate = 60000)
   public void checkContainerActivity() {
     if (!this.docker.isContainerRunning()) return;
+    System.out.println("unAllowedCommand: " + this.unallowedCommand);
+    System.out.println("container name:" + this.docker.getUserWorkspaceName());
 
     if (System.currentTimeMillis() - lastActivityTime > 2 * 60 * 1000) { // 2 minutes of inactivity
-      this.docker.removeContainer();
+      this.docker.removeUserWorkspace();
       this.template.convertAndSend("/editor/output", "Docker container stopped due to inactivity");
     }
   }

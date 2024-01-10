@@ -29,7 +29,7 @@ function Terminal({ setWs, ws, code, getFilesList }) {
       return;
     }
 
-    const stompClient = Stomp.client('ws://cumabolat-online-ide.eu-central-1.elasticbeanstalk.com/socket');
+    const stompClient = Stomp.client('ws://localhost:5000/socket');
 
     stompClient.connect({}, function (frame) {
       stompClient.subscribe('/editor/output', function (code) {
@@ -54,9 +54,9 @@ function Terminal({ setWs, ws, code, getFilesList }) {
     }
   };
 
-  const createContainer = () => {
+  const createUserWorkspace = () => {
     if (ws && ws.connected) {
-      fetch('http://localhost:5000/handleDockerContainer', { method: 'POST' })
+      fetch('http://localhost:5000/handleUserWorkspace', { method: 'POST' })
         .catch((error) => {
           console.error('Error:', error);
         });
@@ -171,7 +171,7 @@ function Terminal({ setWs, ws, code, getFilesList }) {
       <div className='buttons'>
         <button id="button" onClick={connect}>Connect to Websocket</button>
         <button id="button" onClick={disconnect}>Disconnect from Websocket</button>
-        <button id="button" onClick={createContainer}>Create Docker Container</button>
+        <button id="button" onClick={createUserWorkspace}>Create User Workspace</button>
         <button id="button" onClick={submit}>Submit</button>
         <button id="button" onClick={clear}>Clear</button>
       </div>

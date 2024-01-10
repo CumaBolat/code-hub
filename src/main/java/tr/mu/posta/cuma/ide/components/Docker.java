@@ -2,16 +2,26 @@ package tr.mu.posta.cuma.ide.components;
 
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.stereotype.Component;
 
 @Component
 public class Docker {
-
-  private String containerName;
+  private String userWorkSpaceName;
   private ShellCommandExecutor shellCommandExecutor = new ShellCommandExecutor();
 
+  @Value("${container.name}")
+  private String containerName;
+
   public Docker() {
-    this.containerName = UUID.randomUUID().toString();
+    this.userWorkSpaceName = UUID.randomUUID().toString();
+  }
+
+  public void createUserWorkspace() {
+    String command = "docker exec " + this.containerName + " /bin/sh -c \\ \"" + "mkdir " + this.userWorkSpaceName + "\"";
+    System.out.println("Docker command: " + command);
+    this.shellCommandExecutor.executeShellCommand(command);
   }
 
   public void startContainer() {
@@ -20,9 +30,8 @@ public class Docker {
     this.shellCommandExecutor.executeShellCommand(command);
   }
 
-  public void removeContainer() {
-    this.stopContainer();
-    String command = "docker rm " + this.containerName;
+  public void removeUserWorkspace() {
+    String command = "docker exec " + this.containerName + " /bin/sh -c \\ \"" + "rm -rf " + this.userWorkSpaceName + "\"";
     this.shellCommandExecutor.executeShellCommand(command);
   }
 
@@ -32,9 +41,9 @@ public class Docker {
   }
 
   public String executeJavaCode(String code, String className) {
-    String fixedCode = this.removeQuotatotion(code);
+    String fixedCode = this.removeQuotation(code);
 
-    String dockerCommand = "docker exec " + this.containerName + " /bin/sh -c \\ \"echo '" 
+    String dockerCommand = "docker exec " + this.containerName + " /bin/sh -c \\ \"" + this.enterUserWorkspace() + " echo '" 
                             + fixedCode + "' > " + className + ".java && javac " + className
                             + ".java && java " + className + "\"";
     System.out.println("Docker command: " + dockerCommand);
@@ -42,9 +51,9 @@ public class Docker {
   }
 
   public void saveJavaCode(String code, String className) {
-    String fixedCode = this.removeQuotatotion(code);
+    String fixedCode = this.removeQuotation(code);
 
-    String dockerCommand = "docker exec " + this.containerName + " /bin/sh -c \\ \"echo '" 
+    String dockerCommand = "docker exec " + this.containerName + " /bin/sh -c \\ \"" + this.enterUserWorkspace() + " echo '" 
                             + fixedCode + "' > " + className + ".java \"";
     
     System.out.println("Docker command: " + dockerCommand);
@@ -52,7 +61,7 @@ public class Docker {
   }
 
   public String executeTerminalCommand(String command) {
-    String dockerCommand = "docker exec " + this.containerName + " /bin/sh -c \" " + command + "\"";
+    String dockerCommand = "docker exec " + this.containerName + " /bin/sh -c \"" + this.enterUserWorkspace() + command + "\"";
     System.out.println("Docker command: " + dockerCommand);
     return this.shellCommandExecutor.executeShellCommand(dockerCommand);
   }
@@ -63,12 +72,30 @@ public class Docker {
     return output.contains(this.containerName);
   }
 
+  public boolean doesUserWorkspaceExist() {
+    String command = "docker exec " + this.containerName + " /bin/sh -c \\ \"ls\"";
+    String output = this.shellCommandExecutor.executeShellCommand(command);
+    return output.contains(this.userWorkSpaceName);
+  }
+
   public String getContainerName() {
     return this.containerName;
   }
 
-  // I hope I spelled this right..
-  private String removeQuotatotion(String code) {
+  public String getUserWorkspaceName() {
+    return this.userWorkSpaceName;
+  }
+
+  private String removeQuotation(String code) {
     return code.replace("\"", "\\\"");
+  }
+
+  private String enterUserWorkspace() {
+    return "cd " + this.userWorkSpaceName + " &&";
+  }
+
+  String deleteUserWorkSpace() {
+    String command = "docker exec " + this.containerName + " /bin/sh -c \\ \"" + "rm -rf " + this.userWorkSpaceName + "\"";
+    return this.shellCommandExecutor.executeShellCommand(command);
   }
 }

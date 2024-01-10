@@ -1,6 +1,8 @@
 package tr.mu.posta.cuma.ide.controllers;
 
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import tr.mu.posta.cuma.ide.components.Docker;
-import tr.mu.posta.cuma.ide.components.DockerSingleton;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -19,7 +20,8 @@ public class FileBrowserController {
   @Value("#{'${initial.code}'.split(',')}")
   private List<String> initialCode;
 
-  private Docker docker = DockerSingleton.getInstance();
+  @Autowired
+  private Docker docker;
   
   @GetMapping("/getFilesList")
   public ResponseEntity<String[]> getFilesList() {
@@ -49,6 +51,7 @@ public class FileBrowserController {
   public void createFile(@RequestBody String fileName) {
       System.out.println("createFile: " + fileName);
       System.out.println("initialCode: " + this.initialCode);
+      System.out.println("container name:" + this.docker.getUserWorkspaceName());
       try {
         String className = this.getClassName(fileName);
         this.docker.saveJavaCode(this.codeInitializer(className), className);
