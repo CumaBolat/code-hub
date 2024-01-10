@@ -1,12 +1,9 @@
 package tr.mu.posta.cuma.ide.components;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -17,12 +14,9 @@ public class ShellCommandExecutor {
     StringBuilder error = new StringBuilder();
 
     ProcessBuilder processBuilder = new ProcessBuilder();
-    processBuilder.command("bash", "-c", command);
+    processBuilder.command("sh", "-c", command);
     try {
       Process process = processBuilder.start();
-
-      // if (command.startsWith("sudo"))
-      //   this.enterPassword(process);
 
       BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
       BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
@@ -54,14 +48,4 @@ public class ShellCommandExecutor {
   private boolean emptyResponse(StringBuilder output, StringBuilder error) {
     return (output.length() == 0 && error.length() == 0);
   }
-
-  // private void enterPassword(Process process) {
-  //   try {
-  //     BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
-  //     writer.write(this.password + "\n");
-  //     writer.flush();
-  //   } catch (IOException e) {
-  //     throw new RuntimeException("Failed to enter password", e);
-  //   }
-  // }
 }

@@ -65,10 +65,12 @@ public class EditorController {
 
   @PostMapping("/handleUserWorkspace")
   public ResponseEntity<Void> handleUserWorkspace() {
-    if (this.docker.doesUserWorkspaceExist()) {
-      this.template.convertAndSend("/editor/output", "Docker container already running");
+    if (this.docker.userWorkspaceExist()) {
+      this.template.convertAndSend("/editor/output", "workspace already exists");
       return ResponseEntity.ok().build();
     }
+    
+    this.lastActivityTime = System.currentTimeMillis();
 
     this.docker.createUserWorkspace();
     this.template.convertAndSend("/editor/output", "workspace created " + this.docker.getUserWorkspaceName());
@@ -77,10 +79,6 @@ public class EditorController {
 
   @Scheduled(fixedRate = 60000)
   public void checkContainerActivity() {
-    if (!this.docker.isContainerRunning()) return;
-    System.out.println("unAllowedCommand: " + this.unallowedCommand);
-    System.out.println("container name:" + this.docker.getUserWorkspaceName());
-
     if (System.currentTimeMillis() - lastActivityTime > 2 * 60 * 1000) { // 2 minutes of inactivity
       this.docker.removeUserWorkspace();
       this.template.convertAndSend("/editor/output", "Docker container stopped due to inactivity");
