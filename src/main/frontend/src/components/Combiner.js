@@ -7,7 +7,7 @@ import Terminal from "./Terminal";
 
 const startUpCode =
     `public class OnlineIDE {
-      
+
   public static void main(String[] args) {
     System.out.println("Hello World");
   }

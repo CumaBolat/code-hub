@@ -75,6 +75,32 @@ function FileBrowser( { setWs, ws, code, setCode, getFilesList, files}) {
           </ul>
         )}
       </div>
+      <div className="docs">
+        <h2 id="editor-header">Getting Started with OnlineIDE</h2>
+        <ol id="editor-text">
+            <li>Establish a WebSocket Connection</li>
+            <li>Create Your Personal Workspace</li>
+            <li>Start Coding</li>
+            <li>Submit Your Code</li>
+        </ol>
+        <h2 id="editor-header">Key Features</h2>
+        <ul id="editor-text">
+            <li>Advanced Syntax Highlighting</li>
+            <li>Semi Auto-Completion</li>
+            <li>Efficient File Browsing</li>
+            <li>Easy File Creation</li>
+            <li>Integrated Terminal</li>
+            <li>Secure Execution of Commands in Docker Container</li>
+        </ul>
+        <h2 id="editor-header">Technologies Used</h2>
+        <ul id="editor-text">
+            <li>Backend: Java, Spring Boot</li>
+            <li>Frontend: JavaScript, HTML, CSS, React</li>
+            <li>Containerization: Docker</li>
+            <li>Deployment: AWS</li>
+            <li>Additional Technologies: REST APIs, WebSockets</li>
+        </ul>
+      </div>
     </div>
   );
 }
