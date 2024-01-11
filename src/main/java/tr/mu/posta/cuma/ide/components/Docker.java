@@ -15,7 +15,6 @@ public class Docker {
 
   public void createUserWorkspace() {
     String command = "mkdir " + this.userWorkSpaceName;
-    System.out.println("Docker command: " + command);
     this.shellCommandExecutor.executeShellCommand(command);
   }
 
@@ -35,13 +34,11 @@ public class Docker {
     String dockerCommand = this.enterUserWorkspace() + " echo '" 
                             + code + "' > " + className + ".java";
     
-    System.out.println("Docker command: " + dockerCommand);
     this.shellCommandExecutor.executeShellCommand(dockerCommand);
   }
 
   public String executeTerminalCommand(String command) {
     String dockerCommand = this.enterUserWorkspace() + command;
-    System.out.println("Docker command: " + dockerCommand);
     return this.shellCommandExecutor.executeShellCommand(dockerCommand);
   }
 

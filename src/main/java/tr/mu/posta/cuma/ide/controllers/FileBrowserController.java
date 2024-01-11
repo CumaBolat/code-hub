@@ -25,7 +25,6 @@ public class FileBrowserController {
   
   @GetMapping("/getFilesList")
   public ResponseEntity<String[]> getFilesList() {
-    System.out.println("getFilesList");
       try {
           String[] files = this.docker.executeTerminalCommand("ls").split("\n");
           return new ResponseEntity<>(files, HttpStatus.OK);
@@ -37,7 +36,6 @@ public class FileBrowserController {
 
   @PostMapping("/openFile")
   public String openFile(@RequestBody String fileName) {
-    System.out.println("openFile");
     try {
       String fileContent = this.docker.executeTerminalCommand("cat " + fileName);
       return fileContent;
@@ -49,9 +47,6 @@ public class FileBrowserController {
 
   @PostMapping("/createFile")
   public void createFile(@RequestBody String fileName) {
-      System.out.println("createFile: " + fileName);
-      System.out.println("initialCode: " + this.initialCode);
-      System.out.println("container name:" + this.docker.getUserWorkspaceName());
       try {
         String className = this.getClassName(fileName);
         this.docker.saveJavaCode(this.codeInitializer(className), className);
@@ -76,7 +71,7 @@ public class FileBrowserController {
 
   private String getClassName(String fileName) {
     String[] splittedFileName = fileName.split("\\.");
-    System.out.println("splittedFileName: " + splittedFileName[0]);
+
     return splittedFileName[0].replace("\"", "");
   }
   

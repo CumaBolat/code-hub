@@ -25,7 +25,7 @@ public class ShellCommandExecutor {
       while ((line = reader.readLine()) != null) {
         output.append(line + "\n");
       }
-      System.out.println(output.toString());
+
       while ((line = errorReader.readLine()) != null) {
         System.err.println(line);
         error.append(line + "\n");
@@ -40,8 +40,8 @@ public class ShellCommandExecutor {
   }
 
   private String removeLastLine(StringBuilder str) {
-    System.out.println("Output string: " + str.toString());
     str.deleteCharAt(str.length() - 1);
+
     return str.toString();
   }
 

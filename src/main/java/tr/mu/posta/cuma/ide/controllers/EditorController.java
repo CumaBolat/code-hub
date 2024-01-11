@@ -37,8 +37,6 @@ public class EditorController {
   public String handleSubmit(Code code) throws Exception {
     lastActivityTime = System.currentTimeMillis(); // Update last activity time
     String className = this.getClassNameFromCode(code.getCode());
-    System.out.println("Class name: " + className);
-    System.out.println("Code: " + code.getCode());
     
     return this.docker.executeJavaCode(code.getCode(), className);
   }
@@ -49,7 +47,7 @@ public class EditorController {
     lastActivityTime = System.currentTimeMillis();
 
     String secureCommand = this.commandBuilder.buildSecureCommand(command);
-    System.out.println("new, secure command: " + secureCommand);
+
     if (secureCommand.contains(this.unallowedCommand)) return secureCommand;
 
     return this.docker.executeTerminalCommand(secureCommand);
