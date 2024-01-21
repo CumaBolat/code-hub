@@ -5,14 +5,13 @@ import "../css/terminal.css";
 import { useNavigate } from 'react-router-dom';
 
 
-function Terminal({ setWs, ws, code, getFilesList }) {
+function Terminal({ setWs, ws, code, sessionId, getFilesList }) {
   const [input, setInput] = useState('');
   const [isConnected, setIsConnected] = useState(false);
   const [output, setOutput] = useState('Welcome to Online IDE!' + '\n' + '>');
   const [isContainerCreated, setIsContainerCreated] = useState(false);
   const [commandHistory, setCommandHistory] = useState([]);
   const [historyIndex, setHistoryIndex] = useState(0);
-  const navigate = useNavigate();
 
   const outputRef = React.useRef(null);
 
@@ -24,24 +23,27 @@ function Terminal({ setWs, ws, code, getFilesList }) {
 
   const connect = () => {
     if (ws && ws.connected) {
-        console.log('Already connected');
+      console.log('Already connected');
       setOutput(prevOutput => prevOutput + '\nAlready connected\n>');
       return;
     }
 
-    const stompClient = Stomp.client('ws://cumabolat-online-ide.eu-central-1.elasticbeanstalk.com/socket');
+    const stompClient = Stomp.client('ws://localhost:5000/socket?httpSessionId=' + sessionId);
 
-    stompClient.connect({}, function (frame) {
-      stompClient.subscribe('/editor/output', function (code) {
+    stompClient.connect({ "simpSessionId": sessionId }, function (frame) {
+      stompClient.subscribe('/user/' + sessionId + '/editor/output', function (code) {
         console.log('Received code ' + code.body);
         setOutput(prevOutput => prevOutput + '\n' + code.body + '\n>');
       });
 
+      console.log(sessionId+'conencted');
+
       setWs(stompClient);
-      setOutput(prevOutput => prevOutput + '\n' +'Connected to WebSocket\n>');
+      setOutput(prevOutput => prevOutput + '\n' + 'Connected to WebSocket\n>');
     }, function (error) {
       console.error('STOMP error ' + error);
     });
+
   };
 
   const disconnect = () => {
@@ -50,38 +52,46 @@ function Terminal({ setWs, ws, code, getFilesList }) {
       setWs(null);
       setOutput(prevOutput => prevOutput + '\n' + 'Disconnected from WebSocket\n>');
     } else {
-      console.log('Already disconnected');
+      setOutput(prevOutput => prevOutput + '\n' + 'Already disconnected\n>');
     }
   };
 
-  const createContainer = () => {
-    if (ws && ws.connected) {
-      fetch('http://localhost:5000/handleDockerContainer', { method: 'POST' })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
-      setIsContainerCreated(true);
-      setTimeout(save, 500);
-      setTimeout(getFilesList, 750);
-    } else {
-      console.error('WebSocket is not connected');
-      setOutput(prevOutput => prevOutput + '\n' + 'Connect to websocket first\n>');
-    }
+  const createUserWorkspace = () => {
+    fetch('http://localhost:5000/handleUserWorkspace', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'simpSessionId': sessionId
+      }
+    })
+      .then(response => {
+        if (response.ok) {
+          setIsContainerCreated(true);
+          setTimeout(save, 500);
+          setTimeout(getFilesList, 750);
+        } else {
+          setOutput(prevOutput => prevOutput + '\n' + 'Failed to create user workspace\n>');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
   };
 
   const submit = () => {
+    console.log("sessionID is ::::" + sessionId);
     if (ws && ws.connected) {
-      ws.send("/app/editor", {}, JSON.stringify({ 'code': code }));
-      console.log('Code submitted successfully');
+      console.log("sessionID asdasd" + sessionId)
+      ws.send('/app/editor', { 'simpSessionId': sessionId }, JSON.stringify({ 'code': code }));
     } else {
-      console.error('WebSocket is not connected');
+      setOutput(prevOutput => prevOutput + '\n' + 'Connect to websocket first\n>');
     }
     setTimeout(getFilesList, 450);
   };
 
   const save = () => {
     if (ws && ws.connected) {
-      ws.send("/app/save", {}, JSON.stringify({ 'code': code }));
+      ws.send("/app/save", { "simpSessionId": sessionId }, JSON.stringify({ 'code': code }));
     } else {
       console.error('Not saved');
     }
@@ -89,13 +99,14 @@ function Terminal({ setWs, ws, code, getFilesList }) {
 
   const run = (command) => {
     if (ws && ws.connected) {
-      ws.send("/app/terminal", {}, JSON.stringify(command));
+      ws.send("/app/terminal", { "simpSessionId": sessionId }, JSON.stringify(command));
       console.log('Input submitted successfully');
       setInput('');
     } else {
       console.error('WebSocket is not connected');
     }
   };
+
 
   const clear = async () => {
     setOutput('Welcome to the Online IDE\n>');
@@ -110,17 +121,17 @@ function Terminal({ setWs, ws, code, getFilesList }) {
     const lines = value.split('\n');
     const currentLine = lines.length - 1;
     const currentLineStart = value.lastIndexOf('\n') + 1;
-  
+
     if (event.key === 'Enter') {
       event.preventDefault();
-      
+
       const command = lines.at(-1).replace('>', '');
       let trimmedCommand = command.trim();
 
       if (trimmedCommand.length != 0) {
         setCommandHistory(prevHistory => [trimmedCommand, ...prevHistory]);
         setHistoryIndex(0);
-      
+
         if (trimmedCommand === 'clear') {
           clear();
           return;
@@ -171,12 +182,12 @@ function Terminal({ setWs, ws, code, getFilesList }) {
       <div className='buttons'>
         <button id="button" onClick={connect}>Connect to Websocket</button>
         <button id="button" onClick={disconnect}>Disconnect from Websocket</button>
-        <button id="button" onClick={createContainer}>Create Docker Container</button>
+        <button id="button" onClick={createUserWorkspace}>Create User Workspace</button>
         <button id="button" onClick={submit}>Submit</button>
         <button id="button" onClick={clear}>Clear</button>
       </div>
       <div className="output-div">
-        <textarea 
+        <textarea
           ref={outputRef}
           value={output}
           onChange={handleOutputChange}
@@ -185,7 +196,7 @@ function Terminal({ setWs, ws, code, getFilesList }) {
           id='output'
         />
       </div>
-     
+
     </div>
   );
 }

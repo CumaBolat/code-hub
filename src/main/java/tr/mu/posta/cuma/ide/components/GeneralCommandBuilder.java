@@ -11,7 +11,6 @@ public class GeneralCommandBuilder implements CommandBuilder {
   // ls -al && cd ..
 
   public String buildSecureCommand(String command) {
-    System.out.println("initial command sent to general:" + command);
     command = command.trim();
 
     String[] commandParts = command.split("&&");
@@ -24,13 +23,6 @@ public class GeneralCommandBuilder implements CommandBuilder {
       String[] commandArgs = commandPartParts.length > 1 ? 
                                 Arrays.copyOfRange(commandPartParts, 1, commandPartParts.length)
                                 : new String[0];
-
-
-      System.out.println("general terminal: " + commandName);
-      System.out.println("args array: " + Arrays.toString(commandArgs));
-      for (char c : commandName.toCharArray()) {
-        System.out.print("chars in command" + (int) c);
-      }
 
       if (this.unAllowedCommand(commandName)) {
         this.clearCommand();
@@ -73,7 +65,6 @@ public class GeneralCommandBuilder implements CommandBuilder {
   @Override
   public void ls(String[] args) {
     this.command.append(" ls");
-    System.out.println("Im in ls method" + this.command.toString());
 
     this.addArgument(args);
   }

@@ -1,23 +1,185 @@
-.button-container {
+.center-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
   flex-direction: column;
-  gap: 20px;
+  justify-content: space-between;
+  height: 100vh;
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  background-image: url('../images/cuma-study.png'), url('../images/code.png');
+  background-size: auto, 15%;
+  background-repeat: no-repeat;
+  background-position: 125px calc(100% - 260px), calc(100% - 150px) calc(100% - 150px);
 }
 
-.pretty-button {
-  font-size: 1.5em;
-  padding: 10px 20px;
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  margin-top: -150px;
+}
+
+.outer-square {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  background-color: #ffffff;
+  margin-top: 30px;
+  margin-left: 85%;
+}
+
+.inner-square {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  background-color: #4d4c4a;
+}
+
+.home-page-center-button {
+  width: 100px;
+  margin-left: 85%;
+  color: #fff;
+  background-color: #4d4c4a;
+  z-index: 9999;
   border: none;
   border-radius: 5px;
-  background-color: #4CAF50;
-  color: white;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-weight: bold;
 }
 
-.pretty-button:hover {
-  background-color: #45a049;
+.home-page-center-button:hover {
+  background-color: #ffffff;
+  color: #4d4c4a;
+}
+
+.home-header-1 {
+  font-size: 50px;
+  color: #4d4c4a;
+  font-weight: bold;
+  font-family: 'Georgia', serif;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.home-header-2 {
+  font-size: 30px;
+  color: #4d4c4a;
+  font-style: italic;
+  font-family: 'Georgia', serif;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.about-me {
+  margin: 20px 0;
+  width: 800px;
+  color: #4d4c4a;
+  font-family: 'Georgia', serif;
+  margin-bottom: -45px;
+  font-size: 16px;
+}
+
+.about-me p {
+  margin-bottom: 20px;
+}
+
+.home-header-3 {
+  font-size: 30px;
+  color: #4d4c4a;
+  font-weight: bold;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: 20px;
+}
+
+.skills {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.skill {
+  width: 100%;
+  font-weight: bold;
+}
+
+.skill-item {
+  display: flex;
+  align-items: center;
+  margin-left: 30%;
+}
+
+.skill ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.skill ul li {
+  margin-bottom: 10px;
+  color: #7f7f7f;
+}
+
+.skill ul li span {
+  color: #4d4c4a;
+  font: bold;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  margin: 20px auto;
+}
+
+.disabled-button {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.home-button {
+  margin: 20px -500px;
+  padding: 10px 20px;
+  font-size: 1em;
+  color: #fff;
+  background-color: #4d4c4a;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  align-items: center;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+  box-shadow: 2px 2px 4px #000000;
+}
+
+.home-button:hover {
+  background-color: #ffffff;
+  color: #4d4c4a;
+
+}
+
+footer {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100px;
+  margin-top: 20px;
+  margin-left: 50%;
+  background-color: #f5f5f5;
+}
+
+footer a {
+  color: #4d4c4a;
+  transition: color 0.3s ease;
+}
+
+footer a:hover {
+  color: #000000;
 }

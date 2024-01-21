@@ -1,74 +1,57 @@
 package tr.mu.posta.cuma.ide.components;
 
-import java.util.UUID;
-
 import org.springframework.stereotype.Component;
 
 @Component
 public class Docker {
 
-  private String containerName;
+  private String userWorkSpaceName;
   private ShellCommandExecutor shellCommandExecutor = new ShellCommandExecutor();
 
-  public Docker() {
-    this.containerName = UUID.randomUUID().toString();
+  public void createUserWorkspace(String sessionId) {
+    String command = "mkdir " + sessionId;
+    this.userWorkSpaceName = sessionId;
+    this.shellCommandExecutor.executeShellCommand(command, sessionId);
   }
 
-  public void startContainer() {
-    System.out.println("Starting container: " + this.containerName);
-    String command = "docker run -itd --name " + this.containerName + " java-ide";
-    this.shellCommandExecutor.executeShellCommand(command);
+  public void removeUserWorkspace(String sessionId) {
+    String command = "rm -rf " + sessionId;
+    this.shellCommandExecutor.executeShellCommand(command, this.userWorkSpaceName);
   }
 
-  public void removeContainer() {
-    this.stopContainer();
-    String command = "docker rm " + this.containerName;
-    this.shellCommandExecutor.executeShellCommand(command);
+  public String executeJavaCode(String code, String className, String sessionId) {
+    String dockerCommand = this.enterUserWorkspace(sessionId) + " echo '"
+        + code + "' > " + className + ".java && javac " + className
+        + ".java && java " + className;
+    return this.shellCommandExecutor.executeShellCommand(dockerCommand, sessionId);
   }
 
-  private void stopContainer() {
-    String command = "docker stop " + this.containerName;
-    this.shellCommandExecutor.executeShellCommand(command);
+  public void saveJavaCode(String code, String className, String sessionId) {
+    String dockerCommand = this.enterUserWorkspace(sessionId) + " echo '"
+        + code + "' > " + className + ".java";
+
+    this.shellCommandExecutor.executeShellCommand(dockerCommand, sessionId);
   }
 
-  public String executeJavaCode(String code, String className) {
-    String fixedCode = this.removeQuotatotion(code);
-
-    String dockerCommand = "docker exec " + this.containerName + " /bin/sh -c \\ \"echo '" 
-                            + fixedCode + "' > " + className + ".java && javac " + className
-                            + ".java && java " + className + "\"";
-    System.out.println("Docker command: " + dockerCommand);
-    return this.shellCommandExecutor.executeShellCommand(dockerCommand);
+  public String executeTerminalCommand(String command, String sessionId) {
+    String dockerCommand = this.enterUserWorkspace(sessionId) + command;
+    return this.shellCommandExecutor.executeShellCommand(dockerCommand, sessionId);
   }
 
-  public void saveJavaCode(String code, String className) {
-    String fixedCode = this.removeQuotatotion(code);
+  public boolean userWorkspaceExist(String sessionId) {
+    String command = "ls";
+    String output = this.shellCommandExecutor.executeShellCommand(command, sessionId);
 
-    String dockerCommand = "docker exec " + this.containerName + " /bin/sh -c \\ \"echo '" 
-                            + fixedCode + "' > " + className + ".java \"";
+    if (output == null) return false;
     
-    System.out.println("Docker command: " + dockerCommand);
-    this.shellCommandExecutor.executeShellCommand(dockerCommand);
+    return output.contains(sessionId);
   }
 
-  public String executeTerminalCommand(String command) {
-    String dockerCommand = "docker exec " + this.containerName + " /bin/sh -c \" " + command + "\"";
-    System.out.println("Docker command: " + dockerCommand);
-    return this.shellCommandExecutor.executeShellCommand(dockerCommand);
+  public String getUserWorkspaceName() {
+    return this.userWorkSpaceName;
   }
 
-  public boolean isContainerRunning() {
-    String command = "docker container ls";
-    String output = this.shellCommandExecutor.executeShellCommand(command);
-    return output.contains(this.containerName);
-  }
-
-  public String getContainerName() {
-    return this.containerName;
-  }
-
-  // I hope I spelled this right..
-  private String removeQuotatotion(String code) {
-    return code.replace("\"", "\\\"");
+  private String enterUserWorkspace(String sessionId) {
+    return "cd " + sessionId + " &&";
   }
 }

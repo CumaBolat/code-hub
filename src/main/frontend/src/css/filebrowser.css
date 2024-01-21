@@ -8,7 +8,7 @@
 
 #browser-header {
   width: 100%;
-  background-color: #3b463c;
+  background-color: #528fb3;
   color: white;
   text-align: center;
   font-size: 20px;
@@ -21,7 +21,7 @@
   margin-top: 10px;
   color: white;
   padding: 10px 24px;
-  border: 1px solid #3b463c;
+  border: 1px solid #528fb3;
   cursor: pointer;
   width: 50%;
   opacity: 0.9;
@@ -34,7 +34,7 @@
 .create-file-button {
   width: 15%;
   height: fit-content;
-  background-color: #3b463c;
+  background-color: #528fb3;
   border: none;
   color: white;
   text-align: center;
@@ -42,7 +42,7 @@
   display: inline-block;
   padding: 5px 5px;
   font-size: 12px;
-  margin-left: 150px; /* push the button to the right */
+  margin-left: 150px;
   margin-top: 5px;
   cursor: pointer;
 }
@@ -51,7 +51,7 @@
 .file-button {
   width: 15%;
   height: fit-content;
-  background-color: #3b463c;
+  background-color: #528fb3;
   border: none;
   color: white;
   padding: 10px 20px;
@@ -64,10 +64,27 @@
   cursor: pointer;
 }
 
+.list-button:hover {
+  opacity: 1;
+  background-color: #666666; /* Change as needed */
+}
+
+.create-file-button:hover {
+  background-color: #666666; /* Change as needed */
+}
+
+.file-button:hover {
+  background-color: #666666; /* Change as needed */
+}
+
+input[type="text"]:hover {
+  background-color: #cccccc; /* Change as needed */
+}
+
 input[type="text"] {
   width: 45%;
   height: fit-content;
-  background-color: #3b463c;
+  background-color: #99da99;
   border: none;
   color: white;
   padding: 10px 20px;
@@ -78,4 +95,35 @@ input[type="text"] {
   margin-left: 20px;
   margin-top: 5px;
   cursor: pointer;
+}
+
+
+.docs {
+  position: fixed;
+  top: 50%;
+  left: 0%;
+  max-width: 600px;
+  padding: 20px;
+  font-family: 'Helvetica', sans-serif;
+  line-height: 1.2;
+}
+
+.docs h2 {
+  color: #528fb3;
+  margin-top: 20px;
+}
+
+.docs ol, .docs ul {
+  list-style: none;
+  padding: 0;
+}
+
+.docs li {
+  margin-bottom: 0px;
+}
+
+.docs li::before {
+  content: '•';
+  color: #398f9b;
+  margin-right: 8px;
 }
