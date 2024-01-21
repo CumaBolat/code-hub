@@ -2,49 +2,63 @@ import React, { useEffect, useState } from "react";
 
 import '../css/filebrowser.css';
 
-function FileBrowser({ setWs, ws, code, setCode, getFilesList, files }) {
+function FileBrowser({ setWs, ws, code, setCode, getFilesList, files, sessionId }) {
   const [isListVisible, setListVisible] = useState(true);
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [newFileName, setNewFileName] = useState('');
 
   const toggleListVisibility = () => {
-    setListVisible(!isListVisible);
+      setListVisible(!isListVisible);
   };
 
   const openFile = (file) => {
-    fetch('http://localhost:5000/openFile', { method: 'POST', body: file })
-      .then(response => response.text())
-      .then(data => setCode(data))
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+      fetch('http://localhost:5000/openFile', {
+          method: 'POST',
+          body: file,
+          headers: {
+              'Content-Type': 'text/plain',
+              'simpSessionId': sessionId,
+          },
+      })
+          .then(response => response.text())
+          .then(data => setCode(data))
+          .catch((error) => {
+              console.error('Error:', error);
+          });
   };
 
   const createFile = (fileName) => {
-    fetch('http://localhost:5000/createFile', { method: 'POST', body: JSON.stringify(fileName) })
-      .then(response => response.text())
-      .then(data => setCode(data))
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  }
+      fetch('http://localhost:5000/createFile', {
+          method: 'POST',
+          body: JSON.stringify(fileName),
+          headers: {
+              'Content-Type': 'application/json',
+              'simpSessionId': sessionId,
+          },
+      })
+          .then(response => response.text())
+          .then(data => setCode(data))
+          .catch((error) => {
+              console.error('Error:', error);
+          });
+  };
 
   const handleCreateFileClick = () => {
-    if (isPopupVisible) {
-      setPopupVisible(false);
-      return;
-    }
-    setPopupVisible(true);
+      if (isPopupVisible) {
+          setPopupVisible(false);
+          return;
+      }
+      setPopupVisible(true);
   };
 
   const handleFileNameChange = (event) => {
-    setNewFileName(event.target.value);
+      setNewFileName(event.target.value);
   };
 
   const handleCreateFile = () => {
-    createFile(newFileName);
-    setTimeout(getFilesList, 100);
-    setPopupVisible(false);
+      createFile(newFileName);
+      setTimeout(getFilesList, 100);
+      setPopupVisible(false);
   };
 
   return (
@@ -56,7 +70,7 @@ function FileBrowser({ setWs, ws, code, setCode, getFilesList, files }) {
 
       <div>
         <button className="list-button" onClick={toggleListVisibility}>
-          {isListVisible ? 'Hide Files' : '> java-ide'}
+          {isListVisible ? 'Hide Files' : 'Show Files'}
         </button>
 
         <button className="create-file-button" onClick={handleCreateFileClick} >Create File</button>

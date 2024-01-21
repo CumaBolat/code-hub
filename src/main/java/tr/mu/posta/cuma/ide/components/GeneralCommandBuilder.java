@@ -24,10 +24,6 @@ public class GeneralCommandBuilder implements CommandBuilder {
                                 Arrays.copyOfRange(commandPartParts, 1, commandPartParts.length)
                                 : new String[0];
 
-      for (char c : commandName.toCharArray()) {
-        System.out.print("chars in command" + (int) c);
-      }
-
       if (this.unAllowedCommand(commandName)) {
         this.clearCommand();
         return commandName + ": command not allowed, please sign in or register!";

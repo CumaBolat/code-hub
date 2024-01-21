@@ -1,18 +1,18 @@
 package tr.mu.posta.cuma.ide.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import tr.mu.posta.cuma.ide.components.Docker;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
 
 @RestController
 public class FileBrowserController {
@@ -22,48 +22,53 @@ public class FileBrowserController {
 
   @Autowired
   private Docker docker;
-  
+
   @GetMapping("/getFilesList")
-  public ResponseEntity<String[]> getFilesList() {
-      try {
-          String[] files = this.docker.executeTerminalCommand("ls").split("\n");
-          return new ResponseEntity<>(files, HttpStatus.OK);
-      } catch (Exception e) {
-          e.printStackTrace();
-          return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-      }
+  public ResponseEntity<String[]> getFilesList(@RequestHeader("simpSessionId") String sessionId) {
+    try {
+      String[] files = this.docker.executeTerminalCommand("ls", sessionId).split("\n");
+      return ResponseEntity.ok(files);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @PostMapping("/openFile")
-  public String openFile(@RequestBody String fileName) {
+  public ResponseEntity<String> openFile(@RequestBody String fileName,
+      @RequestHeader("simpSessionId") String sessionId) {
     try {
-      String fileContent = this.docker.executeTerminalCommand("cat " + fileName);
-      return fileContent;
+      String fileContent = this.docker.executeTerminalCommand("cat " + fileName, sessionId);
+      return ResponseEntity.ok(fileContent);
     } catch (Exception e) {
       e.printStackTrace();
-      return null;
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
   }
 
   @PostMapping("/createFile")
-  public void createFile(@RequestBody String fileName) {
-      try {
-        String className = this.getClassName(fileName);
-        this.docker.saveJavaCode(this.codeInitializer(className), className);
-      } catch (Exception e) {
-          e.printStackTrace();
-      }
+  public ResponseEntity<String> createFile(@RequestBody String fileName,
+      @RequestHeader("simpSessionId") String sessionId) {
+    try {
+      String className = getClassName(fileName);
+      String code = codeInitializer(className);
+      docker.saveJavaCode(code, className, sessionId);
+      return ResponseEntity.ok(code);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
   }
 
   private String codeInitializer(String className) {
     StringBuilder result = new StringBuilder();
 
-    for (int i = 0; i < this.initialCode.size(); i++) {
-      if (this.initialCode.get(i).equals("Main")) {
+    for (String codeLine : this.initialCode) {
+      if (codeLine.equals("Main")) {
         result.append(className);
-        continue;
+      } else {
+        result.append(codeLine);
       }
-      result.append(this.initialCode.get(i));
     }
 
     return result.toString();
@@ -71,8 +76,6 @@ public class FileBrowserController {
 
   private String getClassName(String fileName) {
     String[] splittedFileName = fileName.split("\\.");
-
     return splittedFileName[0].replace("\"", "");
   }
-  
 }
