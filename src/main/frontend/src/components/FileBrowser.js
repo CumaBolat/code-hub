@@ -64,7 +64,7 @@ function FileBrowser({ setWs, ws, code, setCode, getFilesList, files, sessionId 
   return (
     <div className="browser">
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <button onClick={() => window.history.back()} style={{ marginRight: '10px' }}>Go Back</button>
+      <button className="back-button" onClick={() => window.history.back()} style={{ marginRight: '10px' }}>Go Back</button>
         <h1 id="browser-header">FileBrowser</h1>
       </div>
 

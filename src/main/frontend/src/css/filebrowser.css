@@ -6,6 +6,23 @@
   color: white;
 }
 
+.back-button {
+  background-color: #528fb3;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  margin: 10px;
+  font-size: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+}
+
+.back-button:hover {
+  background-color: #666666;
+  color: white;
+}
+
 #browser-header {
   width: 100%;
   background-color: #528fb3;
@@ -66,19 +83,19 @@
 
 .list-button:hover {
   opacity: 1;
-  background-color: #666666; /* Change as needed */
+  background-color: #666666;
 }
 
 .create-file-button:hover {
-  background-color: #666666; /* Change as needed */
+  background-color: #666666;
 }
 
 .file-button:hover {
-  background-color: #666666; /* Change as needed */
+  background-color: #666666;
 }
 
 input[type="text"]:hover {
-  background-color: #cccccc; /* Change as needed */
+  background-color: #cccccc;
 }
 
 input[type="text"] {
