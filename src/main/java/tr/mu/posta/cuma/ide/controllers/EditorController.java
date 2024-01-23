@@ -3,11 +3,8 @@ package tr.mu.posta.cuma.ide.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
-import org.springframework.messaging.simp.SimpMessageType;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -21,12 +18,15 @@ import tr.mu.posta.cuma.ide.components.Docker;
 import tr.mu.posta.cuma.ide.components.GeneralCommandBuilder;
 
 import java.util.Arrays;
+import java.util.Map;
+import java.util.HashMap;
 
 @Controller
 public class EditorController {
 
   private final CommandBuilder commandBuilder = new GeneralCommandBuilder();
   private long lastActivityTime = System.currentTimeMillis();
+  private Map<String, Long> userWorkspaceMap = new HashMap<>();
 
   @Value("${unallowed.command}")
   private String unallowedCommand;
@@ -43,6 +43,8 @@ public class EditorController {
     lastActivityTime = System.currentTimeMillis();
     String sessionId = (String) headerAccessor.getSessionAttributes().get("httpSessionId");
 
+    this.userWorkspaceMap.put(sessionId, this.lastActivityTime);
+
     String className = this.getClassNameFromCode(code.getCode(), sessionId);
     String result = this.docker.executeJavaCode(code.getCode(), className, sessionId);
 
@@ -54,8 +56,9 @@ public class EditorController {
   @SendToUser("/editor/output")
   public String handleTerminal(SimpMessageHeaderAccessor headerAccessor, String command) throws Exception {
     lastActivityTime = System.currentTimeMillis();
-
     String sessionId = (String) headerAccessor.getSessionAttributes().get("httpSessionId");
+
+    this.userWorkspaceMap.put(sessionId, this.lastActivityTime);
 
     String secureCommand = this.commandBuilder.buildSecureCommand(command);
 
@@ -75,8 +78,9 @@ public class EditorController {
     lastActivityTime = System.currentTimeMillis();
     String sessionId = (String) headerAccessor.getSessionAttributes().get("httpSessionId");
 
-    String className = this.getClassNameFromCode(code.getCode(), sessionId);
+    this.userWorkspaceMap.put(sessionId, this.lastActivityTime);
 
+    String className = this.getClassNameFromCode(code.getCode(), sessionId);
     this.docker.saveJavaCode(code.getCode(), className, sessionId);
   }
 
@@ -90,15 +94,27 @@ public class EditorController {
     this.lastActivityTime = System.currentTimeMillis();
 
     this.docker.createUserWorkspace(sessionId);
-    this.template.convertAndSendToUser(sessionId, "/editor/output", "workspace created " + this.docker.getUserWorkspaceName());
+    this.userWorkspaceMap.put(sessionId, this.lastActivityTime);
+
+    this.template.convertAndSendToUser(sessionId,
+                                        "/editor/output",
+                                        "workspace created " + this.docker.getUserWorkspaceName());
     return ResponseEntity.ok().build();
   }
 
   @Scheduled(fixedRate = 60000)
-  public void checkContainerActivity() {
-    if (System.currentTimeMillis() - lastActivityTime > 2 * 60 * 1000) { // 2 minutes of inactivity
-      this.docker.removeUserWorkspace();
-      this.template.convertAndSendToUser(sessionId,"/editor/output", "Docker container stopped due to inactivity");
+  private void checkUserWorkspaceActivity() {
+    for (String sessionID : this.userWorkspaceMap.keySet()) {
+      long lastActivityTime = this.userWorkspaceMap.get(sessionID);
+      long currentTime = System.currentTimeMillis();
+
+      if (currentTime - lastActivityTime > 180000) {
+        this.docker.removeUserWorkspace(sessionID);
+        this.template.convertAndSendToUser(sessionID,
+                                            "/editor/output",
+                                            "workspace removed due to inactivity");
+        this.userWorkspaceMap.remove(sessionID);
+      }
     }
   }
 
