@@ -23,7 +23,6 @@ function Terminal({ setWs, ws, code, sessionId, getFilesList }) {
 
   const connect = () => {
     if (ws && ws.connected) {
-      console.log('Already connected');
       setOutput(prevOutput => prevOutput + '\nAlready connected\n>');
       return;
     }
@@ -32,11 +31,8 @@ function Terminal({ setWs, ws, code, sessionId, getFilesList }) {
 
     stompClient.connect({ "simpSessionId": sessionId }, function (frame) {
       stompClient.subscribe('/user/' + sessionId + '/editor/output', function (code) {
-        console.log('Received code ' + code.body);
         setOutput(prevOutput => prevOutput + '\n' + code.body + '\n>');
       });
-
-      console.log(sessionId+'conencted');
 
       setWs(stompClient);
       setOutput(prevOutput => prevOutput + '\n' + 'Connected to WebSocket\n>');
@@ -79,14 +75,12 @@ function Terminal({ setWs, ws, code, sessionId, getFilesList }) {
   };
 
   const submit = () => {
-    console.log("sessionID is ::::" + sessionId);
     if (ws && ws.connected) {
-      console.log("sessionID asdasd" + sessionId)
       ws.send('/app/editor', { 'simpSessionId': sessionId }, JSON.stringify({ 'code': code }));
     } else {
       setOutput(prevOutput => prevOutput + '\n' + 'Connect to websocket first\n>');
     }
-    setTimeout(getFilesList, 450);
+    setTimeout(getFilesList, 550);
   };
 
   const save = () => {
@@ -100,7 +94,6 @@ function Terminal({ setWs, ws, code, sessionId, getFilesList }) {
   const run = (command) => {
     if (ws && ws.connected) {
       ws.send("/app/terminal", { "simpSessionId": sessionId }, JSON.stringify(command));
-      console.log('Input submitted successfully');
       setInput('');
     } else {
       console.error('WebSocket is not connected');

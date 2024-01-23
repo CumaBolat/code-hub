@@ -11,7 +11,7 @@
   background-image: url('../images/cuma-study.png'), url('../images/code.png');
   background-size: auto, 15%;
   background-repeat: no-repeat;
-  background-position: 125px calc(100% - 260px), calc(100% - 150px) calc(100% - 150px);
+  background-position: 110px calc(100% - 240px), calc(100% - 150px) calc(100% - 150px);
 }
 
 .content {

@@ -23,8 +23,6 @@ function Combiner() {
   useEffect(() => {
     const id = uuidv4();
     setSessionId(id);
-    console.log("id is:::"+id);
-    console.log("session id is:::"+sessionId);
   }, []);
 
   const getFilesList = () => {

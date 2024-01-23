@@ -38,8 +38,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                 @Override
                 public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response,
                                                WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
-                    // Get the HTTP session ID from the query parameters
-                    String httpSessionId = request.getURI().getQuery().split("=")[1];
+                                                String httpSessionId = request.getURI().getQuery().split("=")[1];
                     attributes.put("httpSessionId", httpSessionId);
                     return true;
                 }

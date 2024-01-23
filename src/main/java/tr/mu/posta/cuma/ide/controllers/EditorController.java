@@ -46,8 +46,6 @@ public class EditorController {
     String className = this.getClassNameFromCode(code.getCode(), sessionId);
     String result = this.docker.executeJavaCode(code.getCode(), className, sessionId);
 
-    System.out.println("Received sessionId: " + sessionId);
-
     this.template.convertAndSendToUser(sessionId, "/editor/output", result);
     return result;
   }
@@ -80,7 +78,6 @@ public class EditorController {
     String className = this.getClassNameFromCode(code.getCode(), sessionId);
 
     this.docker.saveJavaCode(code.getCode(), className, sessionId);
-    this.template.convertAndSendToUser(sessionId, "/editor/output", "Code saved successfully");
   }
 
   @PostMapping("/handleUserWorkspace")
@@ -91,8 +88,6 @@ public class EditorController {
     }
 
     this.lastActivityTime = System.currentTimeMillis();
-
-    System.out.println("Received sessionId: " + sessionId);
 
     this.docker.createUserWorkspace(sessionId);
     this.template.convertAndSendToUser(sessionId, "/editor/output", "workspace created " + this.docker.getUserWorkspaceName());
