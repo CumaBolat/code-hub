@@ -1,4 +1,4 @@
-package tr.mu.posta.cuma.ide.models;
+package tr.mu.posta.cuma.projects.ide.models;
 
 public class Code {
 

@@ -1,4 +1,4 @@
-package tr.mu.posta.cuma.ide.controllers;
+package tr.mu.posta.cuma.projects.ide.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
-import tr.mu.posta.cuma.ide.components.Docker;
+import tr.mu.posta.cuma.projects.ide.components.Docker;
 
 import java.util.List;
 

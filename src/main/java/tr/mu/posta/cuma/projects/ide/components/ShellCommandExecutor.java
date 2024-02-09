@@ -1,4 +1,4 @@
-package tr.mu.posta.cuma.ide.components;
+package tr.mu.posta.cuma.projects.ide.components;
 
 import java.io.BufferedReader;
 import java.io.IOException;

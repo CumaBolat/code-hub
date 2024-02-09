@@ -1,8 +1,8 @@
-package tr.mu.posta.cuma.ide.components;
+package tr.mu.posta.cuma.projects.ide.components;
 
 import java.util.Arrays;
 
-import tr.mu.posta.cuma.ide.repos.CommandBuilder;
+import tr.mu.posta.cuma.projects.ide.repos.CommandBuilder;
 
 public class GeneralCommandBuilder implements CommandBuilder {
 

@@ -1,4 +1,4 @@
-package tr.mu.posta.cuma.ide.repos;
+package tr.mu.posta.cuma.projects.ide.repos;
 
 public interface CommandBuilder {
   public final String[] ALL_COMMANDS = {

@@ -1,12 +1,12 @@
-package tr.mu.posta.cuma.ide;
+package tr.mu.posta.cuma.projects;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class IdeApplication {
+public class MyApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(IdeApplication.class, args);
+		SpringApplication.run(MyApplication.class, args);
 	}
 }

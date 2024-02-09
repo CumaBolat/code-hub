@@ -1,4 +1,4 @@
-package tr.mu.posta.cuma.ide.components;
+package tr.mu.posta.cuma.projects.ide.components;
 
 import org.springframework.stereotype.Component;
 

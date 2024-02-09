@@ -1,4 +1,4 @@
-package tr.mu.posta.cuma.ide.controllers;
+package tr.mu.posta.cuma.projects.ide.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,10 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-import tr.mu.posta.cuma.ide.models.Code;
-import tr.mu.posta.cuma.ide.repos.CommandBuilder;
-import tr.mu.posta.cuma.ide.components.Docker;
-import tr.mu.posta.cuma.ide.components.GeneralCommandBuilder;
+import tr.mu.posta.cuma.projects.ide.models.Code;
+import tr.mu.posta.cuma.projects.ide.repos.CommandBuilder;
+import tr.mu.posta.cuma.projects.ide.components.Docker;
+import tr.mu.posta.cuma.projects.ide.components.GeneralCommandBuilder;
 
 import java.util.Arrays;
 import java.util.Map;

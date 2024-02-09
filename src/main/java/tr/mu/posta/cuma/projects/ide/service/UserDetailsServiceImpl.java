@@ -1,12 +1,12 @@
-package tr.mu.posta.cuma.ide.service;
+package tr.mu.posta.cuma.projects.ide.service;
 
 import java.util.ArrayList;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import tr.mu.posta.cuma.ide.models.User;
-import tr.mu.posta.cuma.ide.repos.UserRepository;
+import tr.mu.posta.cuma.projects.ide.models.User;
+import tr.mu.posta.cuma.projects.ide.repos.UserRepository;
 
 public class UserDetailsServiceImpl implements UserDetailsService {
     private UserRepository userRepository;

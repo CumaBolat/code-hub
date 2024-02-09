@@ -1,4 +1,4 @@
-package tr.mu.posta.cuma.ide.config;
+package tr.mu.posta.cuma.projects.ide.config;
 
 import java.util.Map;
 
