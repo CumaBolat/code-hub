@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa'; // Import Font Awesome icons
 
-import '../css/home.css';
+import './home.css';
 
 function LoginRegisterButtons() {
   const navigate = useNavigate();

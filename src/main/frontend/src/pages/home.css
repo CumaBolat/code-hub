@@ -8,7 +8,7 @@
   padding: 20px;
   font-family: Arial, sans-serif;
   background-color: #f5f5f5;
-  background-image: url('../images/cuma-study.png'), url('../images/code.png');
+  background-image: url('./images/cuma-study.png'), url('./images/code.png');
   background-size: auto, 15%;
   background-repeat: no-repeat;
   background-position: 110px calc(100% - 240px), calc(100% - 150px) calc(100% - 150px);
