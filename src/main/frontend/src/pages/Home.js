@@ -86,7 +86,7 @@ function LoginRegisterButtons() {
         </section>
 
         <div className="button-container">
-          <button className='home-button disabled-button' onClick={hanleGameOfLife}>Game of Life (Coming Soon)</button>
+          <button className='home-button' onClick={hanleGameOfLife}>Game of Life (Coming Soon)</button>
           <button className='home-button' onClick={handleEditor}>Online Code Editor</button>
         </div>
       </div>
