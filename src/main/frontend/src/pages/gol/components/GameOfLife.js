@@ -1,31 +1,38 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Board from './Board';
 import Controls from './Controls';
 import '../css/gameoflife.css';
 
 function initializeGrid(numRows, numCols) {
-  const rows = [];
+  const grid = [];
   for (let i = 0; i < numRows; i++) {
-    rows.push(Array.from(Array(numCols), () => 0));
+    const row = [];
+    for (let j = 0; j < numCols; j++) {
+      row.push(0);
+    }
+    grid.push(row);
   }
-  return rows;
+  return grid;
 }
 
 function GameOfLife() {
-  const [nummberOfRows, setNumberOfRows] = useState(20);
-  const [nummberOfColumns, setNumberOfColumns] = useState(20);
-  const [grid, setGrid] = useState(() => initializeGrid(nummberOfRows, nummberOfColumns));
+  const [numberOfRows, setNumberOfRows] = useState(20);
+  const [numberOfColumns, setNumberOfColumns] = useState(20);
+  const [grid, setGrid] = useState([]);
 
-  initializeGrid(nummberOfRows, nummberOfColumns);
+  useEffect(() => {
+    setGrid(initializeGrid(numberOfRows, numberOfColumns));
+  } , []);
 
   const handleNumberOfRows = (e) => {
-    if (e.target.value < 10) return setNumberOfRows(10);
+    if (e.target.value < 20 || e.target.value > 200) return setNumberOfRows(20);
+
 
     setNumberOfRows(parseInt(e.target.value));
   }
 
   const handleNumberOfColumns = (e) => {
-    if (e.target.value < 10) return setNumberOfColumns(10);
+    if (e.target.value < 20 || e.target.value > 200) return setNumberOfColumns(20);
 
     setNumberOfColumns(parseInt(e.target.value));
   }
@@ -34,7 +41,7 @@ function GameOfLife() {
     <div className='gameoflife'>
       <h1>Conway's Game of Life</h1>
       <h2>Made by Cuma Bolat</h2>
-      <Board numRows={nummberOfRows} numCols={nummberOfColumns} grid={grid} setGrid={setGrid} />
+      <Board numRows={numberOfRows} numCols={numberOfColumns} grid={grid} setGrid={setGrid} />
       <Controls
         handleNumberOfRows={handleNumberOfRows}
         handleNumberOfColumns={handleNumberOfColumns}

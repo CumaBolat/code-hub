@@ -1,14 +1,15 @@
 .game-container {
   display: grid;
-  grid-template-columns: repeat(20, 20px);
-  grid-template-rows: repeat(20, 20px);
+  grid-template-columns: repeat(var(--grid-columns, 20), var(--cell-height, 20px));
+  grid-template-rows: repeat(var(--grid-rows, 20), var(--cell-width, 20px));
   gap: 1px;
+  height: 800px;
+  width: 800px;
+
 }
 
 .cell {
-  width: 20px;
-  height: 20px;
-  border: 0px solid #ccc;
+  border: 1px solid #ccc;
   background-color: #f0f0f0;
 }
 
