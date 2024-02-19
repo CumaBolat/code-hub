@@ -21,6 +21,7 @@
     "react-scripts": "5.0.1",
     "react-selectable": "^2.1.1",
     "react-syntax-highlighter": "^15.5.0",
+    "react-zoomable-ui": "^0.11.0",
     "stompjs": "^2.3.3",
     "util": "^0.12.5",
     "uuid": "^9.0.1",

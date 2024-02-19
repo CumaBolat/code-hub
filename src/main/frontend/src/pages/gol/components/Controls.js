@@ -1,6 +1,6 @@
 import React from "react";
 
-const Controls = ({ handleNumberOfRows, handleNumberOfColumns }) => {
+const Controls = ({ handleGridSize }) => {
 
   const startGame = () => {
     console.log("Start Game");
@@ -21,8 +21,7 @@ const Controls = ({ handleNumberOfRows, handleNumberOfColumns }) => {
   return (
     <div className="buttons">
       <input type="number" placeholder="Speed" />
-      <input type="number" placeholder="Rows" onChange={handleNumberOfRows} />
-      <input type="number" placeholder="Columns" onChange={handleNumberOfColumns} />
+      <input type="number" placeholder="Grid Size" onChange={handleGridSize} />
       <button onClick={startGame}>Start</button>
       <button onClick={stopGame}>Stop</button>
       <button onClick={clearGame}>Clear</button>

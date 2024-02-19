@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Space from 'react-zoomable-ui';
 import Board from './Board';
 import Controls from './Controls';
+
 import '../css/gameoflife.css';
 
-function initializeGrid(numRows, numCols) {
+function initializeGrid(gridSize) {
   const grid = [];
-  for (let i = 0; i < numRows; i++) {
+  for (let i = 0; i < gridSize; i++) {
     const row = [];
-    for (let j = 0; j < numCols; j++) {
+    for (let j = 0; j < gridSize; j++) {
       row.push(0);
     }
     grid.push(row);
@@ -16,36 +18,24 @@ function initializeGrid(numRows, numCols) {
 }
 
 function GameOfLife() {
-  const [numberOfRows, setNumberOfRows] = useState(20);
-  const [numberOfColumns, setNumberOfColumns] = useState(20);
+  const [gridSize, setGridSize] = useState(20);
   const [grid, setGrid] = useState([]);
 
   useEffect(() => {
-    setGrid(initializeGrid(numberOfRows, numberOfColumns));
-  } , []);
+    setGrid(initializeGrid(gridSize));
+  }, []);
 
-  const handleNumberOfRows = (e) => {
-    if (e.target.value < 20 || e.target.value > 200) return setNumberOfRows(20);
-
-
-    setNumberOfRows(parseInt(e.target.value));
-  }
-
-  const handleNumberOfColumns = (e) => {
-    if (e.target.value < 20 || e.target.value > 200) return setNumberOfColumns(20);
-
-    setNumberOfColumns(parseInt(e.target.value));
+  const handleGridSize = (e) => {
+    if (e.target.value < 20 || e.target.value > 200) return setGridSize(20);
+    setGridSize(parseInt(e.target.value));
   }
 
   return (
     <div className='gameoflife'>
       <h1>Conway's Game of Life</h1>
       <h2>Made by Cuma Bolat</h2>
-      <Board numRows={numberOfRows} numCols={numberOfColumns} grid={grid} setGrid={setGrid} />
-      <Controls
-        handleNumberOfRows={handleNumberOfRows}
-        handleNumberOfColumns={handleNumberOfColumns}
-      />
+      <Board gridSize={gridSize} grid={grid} setGrid={setGrid} />
+      <Controls handleGridSize={handleGridSize} />
     </div>
   );
 }

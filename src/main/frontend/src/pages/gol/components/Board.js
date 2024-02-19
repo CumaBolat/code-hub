@@ -3,34 +3,30 @@ import produce from 'immer';
 import '../css/board.css';
 import Cell from './Cell';
 
-const Board = ({ numRows, numCols, grid, setGrid }) => {
-  const [cellHeight, setCellHeight] = useState(20);
-  const [cellWidth, setCellWidth] = useState(20);
+const Board = ({ gridSize, grid, setGrid }) => {
+
+  const maxSize = 800;
+  const [cellSize, setCellSize] = useState(20);
 
   useEffect(() => {
-    const containerWidth = 800;
-    const containerHeight = 800;
+    console.log("gridsize changed");
+    setCellSize(maxSize / gridSize);
+  }, [gridSize]);
 
-    const columnSize = containerWidth / numCols;
-    const rowSize = containerHeight / numRows;
-
-    setCellHeight(columnSize);
-    setCellWidth(rowSize);
-  } , [numRows, numCols]);
 
   useEffect(() => {
     setGrid(prevGrid => {
       const newGrid = [];
-      for (let i = 0; i < numRows; i++) {
+      for (let i = 0; i < gridSize; i++) {
         const row = [];
-        for (let j = 0; j < numCols; j++) {
+        for (let j = 0; j < gridSize; j++) {
           row.push(prevGrid[i]?.[j] || 0);
         }
         newGrid.push(row);
       }
       return newGrid;
     });
-  }, [numRows, numCols, setGrid]);
+  }, [gridSize, setGrid]);
 
   const toggleCell = (row, col) => {
     setGrid(prevGrid => {
@@ -45,10 +41,10 @@ const Board = ({ numRows, numCols, grid, setGrid }) => {
     <div
       className="game-container"
       style={{
-        '--grid-columns': numCols,
-        '--grid-rows': numRows,
-        '--cell-height': `${cellHeight}px`,
-        '--cell-width': `${cellWidth}px`,
+        gridTemplateColumns: `repeat(${gridSize}, ${cellSize}px)`,
+        gridTemplateRows: `repeat(${gridSize}, ${cellSize}px)`,
+        width: `${maxSize}px`,
+        height: `${maxSize}px`,
       }}
     >
       {grid?.map((row, rowIndex) =>
@@ -59,8 +55,6 @@ const Board = ({ numRows, numCols, grid, setGrid }) => {
             col={colIndex}
             isAlive={grid[rowIndex][colIndex] === 1}
             toggleCell={toggleCell}
-            numRows={numRows}
-            numCols={numCols}
           />
         ))
       )}
