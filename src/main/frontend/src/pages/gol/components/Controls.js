@@ -1,6 +1,6 @@
 import React from "react";
 
-const Controls = ({ handleGridSize }) => {
+const Controls = ({ gridSize, handleGridSize, setGrid }) => {
 
   const startGame = () => {
     console.log("Start Game");
@@ -14,8 +14,16 @@ const Controls = ({ handleGridSize }) => {
     console.log("Clear Game");
   }
 
-  const randomizeGame = () => {
-    console.log("Randomize Game");
+  const randomizeGrid = () => {
+    const newGrid = [];
+    for (let i = 0; i < gridSize; i++) {
+      const row = [];
+      for (let j = 0; j < gridSize; j++) {
+        row.push(Math.random() > 0.7 ? 1 : 0);
+      }
+      newGrid.push(row);
+    }
+    setGrid(newGrid);
   }
 
   return (
@@ -25,7 +33,7 @@ const Controls = ({ handleGridSize }) => {
       <button onClick={startGame}>Start</button>
       <button onClick={stopGame}>Stop</button>
       <button onClick={clearGame}>Clear</button>
-      <button onClick={randomizeGame}>Randomize</button>
+      <button onClick={randomizeGrid}>Randomize</button>
     </div>
   );
 }
