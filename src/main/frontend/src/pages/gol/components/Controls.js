@@ -10,8 +10,16 @@ const Controls = ({ gridSize, handleGridSize, setGrid }) => {
     console.log("Stop Game");
   }
 
-  const clearGame = () => {
-    console.log("Clear Game");
+  const clearGrid = () => {
+    const newGrid = [];
+    for (let i = 0; i < gridSize; i++) {
+      const row = [];
+      for (let j = 0; j < gridSize; j++) {
+        row.push(0);
+      }
+      newGrid.push(row);
+    }
+    setGrid(newGrid);
   }
 
   const randomizeGrid = () => {
@@ -32,7 +40,7 @@ const Controls = ({ gridSize, handleGridSize, setGrid }) => {
       <input type="number" placeholder="Grid Size" onChange={handleGridSize} />
       <button onClick={startGame}>Start</button>
       <button onClick={stopGame}>Stop</button>
-      <button onClick={clearGame}>Clear</button>
+      <button onClick={clearGrid}>Clear</button>
       <button onClick={randomizeGrid}>Randomize</button>
     </div>
   );
