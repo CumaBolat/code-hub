@@ -6,6 +6,7 @@
 .cell {
   border: 1px solid #5f1212;
   background-color: #ffffff;
+  transition: background-color 0.2s ease;
 }
 
 .alive {
