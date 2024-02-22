@@ -1,13 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useGlobalContext } from "../../../GlobalContext";
 
-const Controls = ({ gridSize, handleGridSize, setGrid }) => {
+const Controls = ({ gridSize, grid, handleGridSize, setGrid }) => {
+  const { sessionId, ws, setWs, stompClient } = useGlobalContext();
 
   const startGame = () => {
     console.log("Start Game");
-  }
+    if (!ws) {
+      console.error('WebSocket connection not established.');
+      return;
+    }
+
+    const serializedGrid = JSON.stringify(grid);
+
+    ws.subscribe('/user/' + sessionId + '/gameoflife/output', function (grid) {
+      setGrid(JSON.parse(grid.body));
+    });
+
+    ws.send('/app/gameoflife/start', { "simpSessionId": sessionId }, serializedGrid);
+  };
 
   const stopGame = () => {
-    console.log("Stop Game");
+    ws.send('/app/gameoflife/stop', { "simpSessionId": sessionId }, '');
   }
 
   const clearGrid = () => {
@@ -34,9 +48,13 @@ const Controls = ({ gridSize, handleGridSize, setGrid }) => {
     setGrid(newGrid);
   }
 
+  const handleSpeedChange = (e) => {
+    ws.send('/app/gameoflife/speed', { "simpSessionId": sessionId }, e.target.value);
+  }
+
   return (
     <div className="buttons">
-      <input type="number" placeholder="Speed" />
+      <input type="range" min="1" max="10" onChange={handleSpeedChange} />
       <input type="number" placeholder="Grid Size" onChange={handleGridSize} />
       <button onClick={startGame}>Start</button>
       <button onClick={stopGame}>Stop</button>

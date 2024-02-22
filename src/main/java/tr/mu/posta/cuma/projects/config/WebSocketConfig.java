@@ -1,4 +1,4 @@
-package tr.mu.posta.cuma.projects.ide.config;
+package tr.mu.posta.cuma.projects.config;
 
 import java.util.Map;
 
@@ -31,22 +31,22 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
   }
 
   @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/socket")
-                .setAllowedOrigins(allowedOrigins)
-                .addInterceptors(new HandshakeInterceptor() {
-                @Override
-                public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response,
-                                               WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
-                                                String httpSessionId = request.getURI().getQuery().split("=")[1];
-                    attributes.put("httpSessionId", httpSessionId);
-                    return true;
-                }
+  public void registerStompEndpoints(StompEndpointRegistry registry) {
+    registry.addEndpoint("/socket")
+      .setAllowedOrigins(allowedOrigins)
+      .addInterceptors(new HandshakeInterceptor() {
+        @Override
+        public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response,
+          WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
+            String httpSessionId = request.getURI().getQuery().split("=")[1];
+            attributes.put("httpSessionId", httpSessionId);
+            return true;
+          }
 
-                @Override
-                public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response,
-                                           WebSocketHandler wsHandler, Exception exception) {
-                }
-            });
-    }
+        @Override
+        public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response,
+          WebSocketHandler wsHandler, Exception exception) {
+        }
+      });
+  }
 }

@@ -35,7 +35,7 @@ function GameOfLife() {
       <h1>Conway's Game of Life</h1>
       <h2>Made by Cuma Bolat</h2>
       <Board gridSize={gridSize} grid={grid} setGrid={setGrid} />
-      <Controls gridSize={gridSize} handleGridSize={handleGridSize} setGrid={setGrid} />
+      <Controls gridSize={gridSize} grid={grid} handleGridSize={handleGridSize} setGrid={setGrid} />
     </div>
   );
 }

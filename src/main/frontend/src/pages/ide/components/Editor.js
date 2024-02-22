@@ -4,7 +4,7 @@ import '../css/editor.css'
 import 'ace-builds/src-noconflict/mode-java';
 import 'ace-builds/src-noconflict/theme-github';
 
-const Editor = ({ code, setCode, ws}) => {
+const Editor = ({ code, setCode }) => {
   
   return (
     <>

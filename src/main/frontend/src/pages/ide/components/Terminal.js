@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import Stomp from 'stompjs';
+import { useGlobalContext } from "../../../GlobalContext";
 
 import "../css/terminal.css";
 import { useNavigate } from 'react-router-dom';
 
 
-function Terminal({ setWs, ws, code, sessionId, getFilesList }) {
+function Terminal({ code, getFilesList }) {
+  const { sessionId, ws, setWs, stompClient } = useGlobalContext();
   const [input, setInput] = useState('');
   const [isConnected, setIsConnected] = useState(false);
+  const [subscribe, setSubscribe] = useState(null);
   const [output, setOutput] = useState('Welcome to Online IDE!' + '\n' + '>');
   const [isContainerCreated, setIsContainerCreated] = useState(false);
   const [commandHistory, setCommandHistory] = useState([]);
@@ -22,31 +24,25 @@ function Terminal({ setWs, ws, code, sessionId, getFilesList }) {
   }, [output]);
 
   const connect = () => {
-    if (ws && ws.connected) {
-      setOutput(prevOutput => prevOutput + '\nAlready connected\n>');
+    if (isConnected) {
+      setOutput(prevOutput => prevOutput + '\n' + 'Already connected to WebSocket\n>');
       return;
     }
-
-    const stompClient = Stomp.client('ws://localhost:5000/socket?httpSessionId=' + sessionId);
-
-    stompClient.connect({ "simpSessionId": sessionId }, function (frame) {
-      stompClient.subscribe('/user/' + sessionId + '/editor/output', function (code) {
-        setOutput(prevOutput => prevOutput + '\n' + code.body + '\n>');
-      });
-
-      setWs(stompClient);
-      setOutput(prevOutput => prevOutput + '\n' + 'Connected to WebSocket\n>');
-    }, function (error) {
-      console.error('STOMP error ' + error);
+    
+    const sub = ws.subscribe('/user/' + sessionId + '/editor/output', function (code) {
+      setOutput(prevOutput => prevOutput + '\n' + code.body + '\n>');
     });
 
+    setSubscribe(sub);
+    setOutput(prevOutput => prevOutput + '\n' + 'Connected to WebSocket\n>');
+    setIsConnected(true);
   };
 
   const disconnect = () => {
-    if (ws && ws.connected) {
-      ws.disconnect();
-      setWs(null);
+    if (isConnected) {
+      subscribe.unsubscribe();
       setOutput(prevOutput => prevOutput + '\n' + 'Disconnected from WebSocket\n>');
+      setIsConnected(false);
     } else {
       setOutput(prevOutput => prevOutput + '\n' + 'Already disconnected\n>');
     }

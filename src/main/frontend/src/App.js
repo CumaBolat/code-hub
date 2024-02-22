@@ -4,8 +4,7 @@ import Home from './pages/Home';
 import Combiner from './pages/ide/components/Combiner';
 import GameOfLife from './pages/gol/components/GameOfLife';
 
-function App() {
-    
+function App() {    
   return (
     <div>
       <Router>

@@ -1,4 +1,4 @@
-package tr.mu.posta.cuma.projects.ide.config;
+package tr.mu.posta.cuma.projects.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
