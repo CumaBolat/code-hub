@@ -15,17 +15,16 @@ const Board = ({ gridSize, grid, setGrid }) => {
 
 
   useEffect(() => {
-    setGrid(prevGrid => {
-      const newGrid = [];
+    setGrid(produce(prevGrid => {
       for (let i = 0; i < gridSize; i++) {
-        const row = [];
-        for (let j = 0; j < gridSize; j++) {
-          row.push(prevGrid[i]?.[j] || 0);
+        if (!prevGrid[i]) {
+          prevGrid[i] = [];
         }
-        newGrid.push(row);
+        for (let j = 0; j < gridSize; j++) {
+          prevGrid[i][j] = prevGrid[i]?.[j] || 0;
+        }
       }
-      return newGrid;
-    });
+    }));
   }, [gridSize, setGrid]);
 
   const toggleCell = (row, col) => {

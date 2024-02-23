@@ -26,7 +26,6 @@ function GameOfLife() {
   }, []);
 
   const handleGridSize = (e) => {
-    if (e.target.value < 20 || e.target.value > 200) return setGridSize(20);
     setGridSize(parseInt(e.target.value));
   }
 

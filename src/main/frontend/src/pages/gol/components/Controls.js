@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useGlobalContext } from "../../../GlobalContext";
 
 const Controls = ({ gridSize, grid, handleGridSize, setGrid }) => {
@@ -55,7 +55,7 @@ const Controls = ({ gridSize, grid, handleGridSize, setGrid }) => {
   return (
     <div className="buttons">
       <input type="range" min="1" max="10" onChange={handleSpeedChange} />
-      <input type="number" placeholder="Grid Size" onChange={handleGridSize} />
+      <input type="range" min="20" max="100" onChange={handleGridSize} />
       <button onClick={startGame}>Start</button>
       <button onClick={stopGame}>Stop</button>
       <button onClick={clearGrid}>Clear</button>
