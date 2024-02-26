@@ -1,0 +1,32 @@
+.controls {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+input[type="range"] {
+  width: 50%;
+  margin: 10px;
+
+}
+
+button {
+  margin: 5px;
+  padding: 10px;
+  font-size: 20px;
+  border-radius: 5px;
+  border: none;
+  background-color: #f54d4d;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #ff6666;
+}
+
+@media (max-width: 1000px) {
+  .controls {
+    flex-direction: row;
+    margin-left: 25%;
+  }
+}

@@ -1,7 +1,8 @@
 import React from "react";
 import { useGlobalContext } from "../../../GlobalContext";
+import "../css/controls.css";
 
-const Controls = ({ gridSize, grid, handleGridSize, setGrid }) => {
+const Controls = ({ gridSize, setGridSize, grid, setGrid }) => {
   const { sessionId, ws, setWs, stompClient } = useGlobalContext();
 
   const startGame = () => {
@@ -52,14 +53,32 @@ const Controls = ({ gridSize, grid, handleGridSize, setGrid }) => {
     ws.send('/app/gameoflife/speed', { "simpSessionId": sessionId }, e.target.value);
   }
 
+  const handleGridSize = (e) => {
+    setGridSize(parseInt(e.target.value));
+  }
+
   return (
-    <div className="buttons">
-      <input type="range" min="1" max="10" onChange={handleSpeedChange} />
-      <input type="range" min="20" max="100" onChange={handleGridSize} />
-      <button onClick={startGame}>Start</button>
-      <button onClick={stopGame}>Stop</button>
-      <button onClick={clearGrid}>Clear</button>
-      <button onClick={randomizeGrid}>Randomize</button>
+    <div className="controls">
+      <div className="control">
+        <input id="speed" type="range" min="1" max="10" defaultValue={"1"} onChange={handleSpeedChange} />
+        <label htmlFor="speed">Speed</label>
+      </div>
+      <div className="control">
+        <input id="gridSize" type="range" min="20" max="100" defaultValue={"20"} onChange={handleGridSize} />
+        <label htmlFor="gridSize">Grid Size</label>
+      </div>
+      <div className="control">
+        <button onClick={startGame}>Start</button>
+      </div>
+      <div className="control">
+        <button onClick={stopGame}>Stop</button>
+      </div>
+      <div className="control">
+        <button onClick={clearGrid}>Clear</button>
+      </div>
+      <div className="control">
+        <button onClick={randomizeGrid}>Randomize</button>
+      </div>
     </div>
   );
 }

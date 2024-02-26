@@ -43,7 +43,7 @@ const Board = ({ gridSize, grid, setGrid }) => {
         gridTemplateColumns: `repeat(${gridSize}, ${cellSize}px)`,
         gridTemplateRows: `repeat(${gridSize}, ${cellSize}px)`,
         width: `${maxSize}px`,
-        height: `${maxSize}px`,
+        height: `${maxSize}px`
       }}
     >
       {grid?.map((row, rowIndex) =>

@@ -4,11 +4,23 @@
 }
 
 .cell {
-  border: 1px solid #5f1212;
+  border: 1px solid #000000;
   background-color: #ffffff;
-  transition: background-color 0.2s ease;
+  cursor: pointer;
 }
 
 .alive {
-  background-color: #9cc7d8;
+  background-color: #f54d4d;
+}
+
+@media (max-width: 800px) {
+  .game-container {
+    grid-template-columns: repeat(20, '5px');
+    grid-template-rows: repeat(20, '5px');
+  }
+
+  .cell {
+    width: 5px;
+    height: 5px;
+  }
 }
