@@ -57,6 +57,12 @@ const Controls = ({ gridSize, setGridSize, grid, setGrid }) => {
     setGridSize(parseInt(e.target.value));
   }
 
+  const handlePreFill = (e) => {
+    setGridSize(100);
+    const pattern = e.target.value;
+    ws.send('/app/gameoflife/prefill', { "simpSessionId": sessionId }, pattern);
+  }
+
   return (
     <div className="controls">
       <div className="control">
@@ -78,6 +84,19 @@ const Controls = ({ gridSize, setGridSize, grid, setGrid }) => {
       </div>
       <div className="control">
         <button onClick={randomizeGrid}>Randomize</button>
+      </div>
+      <div className="control"><option hidden disabled selected value> -- select an option -- </option>
+        <select onChange={handlePreFill}>
+          <option hidden disabled selected value> -- select an option -- </option>
+          <option value="glider">Glider</option>
+          <option value="pulsar">Pulsar</option>
+          <option value="spaceship">Spaceship</option>
+          <option value="blinker">Blinker</option>
+          <option value="pentadecathlon">Pentadecathlon</option>
+          <option value="beacon">Beacon</option>
+          <option value="gosperglidergun">Gosper Glider Gun</option>
+          <option value="achimsVariant">Achim's Variant</option>
+        </select>
       </div>
     </div>
   );
