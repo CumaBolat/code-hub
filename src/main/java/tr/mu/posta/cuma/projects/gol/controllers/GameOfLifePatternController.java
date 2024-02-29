@@ -17,5 +17,4 @@ public class GameOfLifePatternController {
   public ResponseEntity<int[][]> getPatternGrid(@RequestHeader("simpSessionId") String sessionId, @RequestBody String pattern) {
     return ResponseEntity.ok(new int[100][100]);
   }
-
 }
