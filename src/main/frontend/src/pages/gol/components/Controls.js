@@ -58,10 +58,31 @@ const Controls = ({ gridSize, setGridSize, grid, setGrid }) => {
   }
 
   const handlePreFill = (e) => {
-    setGridSize(100);
     const pattern = e.target.value;
-    ws.send('/app/gameoflife/prefill', { "simpSessionId": sessionId }, pattern);
+    fetch(`http://localhost:5000/pattern?pattern=${pattern}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'simpSessionId': sessionId,
+      },
+    }).then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log("Data received from backend:", data);
+      setGridSize(data.length);
+      setGrid(data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
   }
+  
+  
+  
 
   return (
     <div className="controls">
@@ -88,10 +109,10 @@ const Controls = ({ gridSize, setGridSize, grid, setGrid }) => {
       <div className="control"><option hidden disabled selected value> -- select an option -- </option>
         <select onChange={handlePreFill}>
           <option hidden disabled selected value> -- select an option -- </option>
-          <option value="glider">Glider</option>
-          <option value="pulsar">Pulsar</option>
-          <option value="spaceship">Spaceship</option>
-          <option value="blinker">Blinker</option>
+          <option value="STABLE_REFLECTOR">STABLE_REFLECTOR</option>
+          <option value="GUNSTAR">GUNSTAR</option>
+          <option value="55P23">55P23</option>
+          <option value="232P7H3V0">232P7H3V0</option>
           <option value="pentadecathlon">Pentadecathlon</option>
           <option value="beacon">Beacon</option>
           <option value="gosperglidergun">Gosper Glider Gun</option>
