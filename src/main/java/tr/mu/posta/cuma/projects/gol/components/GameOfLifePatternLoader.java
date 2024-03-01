@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class GameOfLifePatternLoader implements ApplicationRunner {
 
   private final String PATTERNS_PATH = "src/main/java/tr/mu/posta/cuma/projects/gol/patterns";
-  private final int EXTRA_PADDING_SIZE = 10;
+  private final int EXTRA_PADDING_SIZE = 40;
 
   private Map<String, int[][]> patternGrids = new ConcurrentHashMap<>();
 
@@ -28,9 +28,9 @@ public class GameOfLifePatternLoader implements ApplicationRunner {
   private void loadPatterns() {
     File patternsFolder = new File(PATTERNS_PATH);
 
-    System.out.println("patternsFolder= " + patternsFolder.toString());
+    //System.out.println("patternsFolder= " + patternsFolder.toString());
     File[] patternFiles = patternsFolder.listFiles((dir, name) -> name.toLowerCase().endsWith(".txt"));
-    printAr(patternFiles);
+    //printAr(patternFiles);
     if (patternFiles != null) {
       for (File file : patternFiles) {
         String patternName = file.getName().replaceAll("\\.txt$", "");
@@ -42,6 +42,13 @@ public class GameOfLifePatternLoader implements ApplicationRunner {
         }
       }
     }
+
+    for (String s : this.patternGrids.keySet()) {
+      System.out.println("pattern name= " + s);
+    }
+
+    //System.out.println("GUNSTAR= ");
+    //printArray(this.patternGrids.get("GUNSTAR"));
   }
 
   private int[][] readPatternFromFile(File file) throws IOException {
@@ -61,7 +68,8 @@ public class GameOfLifePatternLoader implements ApplicationRunner {
     gridSize = Math.max(gridSize, length) + this.EXTRA_PADDING_SIZE;
 
     int[][] patternGrid = new int[gridSize][gridSize];
-    System.out.println("gridSize= " + gridSize);
+    //System.out.println("file naem" + file.getName());
+    //System.out.println("gridSize= " + gridSize);
 
     try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
       int row = 0;
@@ -77,14 +85,15 @@ public class GameOfLifePatternLoader implements ApplicationRunner {
       e.printStackTrace();
     }
 
-    System.out.println("grid= " );
-    printArray(patternGrid);
-    System.out.println("grid length= " + patternGrid.length);
-    System.out.println("grid[0] length= " + patternGrid[0].length);
+    //System.out.println("grid= " );
+    //printArray(patternGrid);
+    //System.out.println("grid length= " + patternGrid.length);
+    //System.out.println("grid[0] length= " + patternGrid[0].length);
     return patternGrid;
   }
 
   public int[][] getPatternGrid(String patternName) {
+    //System.out.println("get pattern name= " + patternName);
     return this.patternGrids.getOrDefault(patternName, new int[100][100]);
   }
 
