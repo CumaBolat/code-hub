@@ -14,19 +14,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class GameOfLifePatternLoader implements ApplicationRunner {
 
-  private final String PATTERNS_PATH = "../patterns";
+  private final String PATTERNS_PATH = "src/main/java/tr/mu/posta/cuma/projects/gol/patterns";
+  private final int EXTRA_PADDING_SIZE = 10;
 
   private Map<String, int[][]> patternGrids = new ConcurrentHashMap<>();
 
   @Override
   public void run(ApplicationArguments args) throws Exception {
-    // TODO Auto-generated method stub
+    System.out.println("Loading patterns...");
     loadPatterns();
   }
 
   private void loadPatterns() {
     File patternsFolder = new File(PATTERNS_PATH);
+
+    System.out.println("patternsFolder= " + patternsFolder.toString());
     File[] patternFiles = patternsFolder.listFiles((dir, name) -> name.toLowerCase().endsWith(".txt"));
+    printAr(patternFiles);
     if (patternFiles != null) {
       for (File file : patternFiles) {
         String patternName = file.getName().replaceAll("\\.txt$", "");
@@ -54,25 +58,48 @@ public class GameOfLifePatternLoader implements ApplicationRunner {
 
     counter.close();
 
-    gridSize = Math.max(gridSize, length);
+    gridSize = Math.max(gridSize, length) + this.EXTRA_PADDING_SIZE;
 
     int[][] patternGrid = new int[gridSize][gridSize];
+    System.out.println("gridSize= " + gridSize);
 
     try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-      /* TODO:
-       * I need to implement the algorithm to read the pattern 
-       * from file and put the pattern in a square grid.
-       * 
-       * I also need to center the pattern in the grid.
-      */      
+      int row = 0;
+      String line2 = reader.readLine();
+      while (line2 != null) {
+        for (int col = 0; col < line2.length(); col++) {
+          patternGrid[row + this.EXTRA_PADDING_SIZE / 2][col + this.EXTRA_PADDING_SIZE / 2] = line2.charAt(col) == 'O' ? 1 : 0;
+        }
+        row++;
+        line2 = reader.readLine();
+      }
     } catch (IOException e) {
       e.printStackTrace();
     }
 
+    System.out.println("grid= " );
+    printArray(patternGrid);
+    System.out.println("grid length= " + patternGrid.length);
+    System.out.println("grid[0] length= " + patternGrid[0].length);
     return patternGrid;
   }
 
   public int[][] getPatternGrid(String patternName) {
     return this.patternGrids.getOrDefault(patternName, new int[100][100]);
+  }
+
+  private void printArray(int[][] arr) {
+    for (int i = 0; i < arr.length; i++) {
+      for (int j = 0; j < arr[i].length; j++) {
+        System.out.print(arr[i][j]);
+      }
+      System.out.println();
+    }
+  }
+
+  private void printAr(File[] arr) {
+    for (int i = 0; i < arr.length; i++) {
+      System.out.println(arr[i].getName());
+    }
   }
 }
