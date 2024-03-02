@@ -18,6 +18,8 @@ public class GameOfLifeController {
   @Autowired
   private SimpMessagingTemplate template;
 
+  private final int INVISIBLE_PADDING_SIZE = 100;
+
   private Map<String, Boolean> gameStates = new ConcurrentHashMap<>();
   private Map<String, Integer> gameSpeeds = new ConcurrentHashMap<>();
 
@@ -30,12 +32,15 @@ public class GameOfLifeController {
 
     this.gameStates.put(sessionId, true);
 
-    int count = 0;
+    int gridSize = grid.length + this.INVISIBLE_PADDING_SIZE;
+    grid = this.transformer.addInvisiblePadding(grid, gridSize);
+
     while (this.gameStates.get(sessionId)) {
       try {
         Thread.sleep(this.gameSpeeds.getOrDefault(sessionId, 1000));
         grid = this.transformer.transformGrid(grid);
-        this.template.convertAndSendToUser(sessionId, "/gameoflife/output", grid);
+        int[][] choppedgrid = this.transformer.chopExtraPadding(grid, this.INVISIBLE_PADDING_SIZE/2);
+        this.template.convertAndSendToUser(sessionId, "/gameoflife/output", choppedgrid);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
