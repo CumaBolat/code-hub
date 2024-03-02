@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class GameOfLifePatternLoader implements ApplicationRunner {
 
-  private final String PATTERNS_PATH = "src/main/java/tr/mu/posta/cuma/projects/gol/patterns";
+  private final String PATTERNS_PATH = "src/main/java/tr/mu/posta/cuma/projects/gol/patterns/grids";
   private final int EXTRA_PADDING_SIZE = 40;
 
   private Map<String, int[][]> patternGrids = new ConcurrentHashMap<>();

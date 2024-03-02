@@ -4,6 +4,8 @@ import "../css/controls.css";
 
 const Controls = ({ gridSize, setGridSize, grid, setGrid }) => {
   const { sessionId, ws, setWs, stompClient } = useGlobalContext();
+  const [patternName, setPatternName] = React.useState("");
+  const [patternDescription, setPatternDescription] = React.useState("");
 
   const startGame = () => {
     console.log("Start Game");
@@ -59,6 +61,7 @@ const Controls = ({ gridSize, setGridSize, grid, setGrid }) => {
 
   const handlePreFill = (e) => {
     const pattern = e.target.value;
+    setPatternName(pattern.replace(/_/g, ' '));
     fetch(`http://localhost:5000/pattern?pattern=${pattern}`, {
       method: 'GET',
       headers: {
@@ -77,6 +80,24 @@ const Controls = ({ gridSize, setGridSize, grid, setGrid }) => {
       setGrid(data);
     })
     .catch((error) => {
+      console.error('Error:', error);
+    });
+
+    fetch(`http://localhost:5000/pattern/description?pattern=${pattern}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'simpSessionId': sessionId,
+      },
+    }).then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.text();
+    }).then(data => {
+      console.log("Data received from backend:", data);
+      setPatternDescription(data);
+    }).catch((error) => {
       console.error('Error:', error);
     });
   }
@@ -118,6 +139,10 @@ const Controls = ({ gridSize, setGridSize, grid, setGrid }) => {
           <option value="gosperglidergun">Gosper Glider Gun</option>
           <option value="achimsVariant">Achim's Variant</option>
         </select>
+      </div>
+      <div className="description">
+        <h2 className="pattern-name">{patternName}</h2>
+        <p className="pattern-description">{patternDescription}</p>
       </div>
     </div>
   );
