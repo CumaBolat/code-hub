@@ -1,10 +1,11 @@
 import React from "react";
-import { useGlobalContext } from "../../../GlobalContext";
-//import Popup from 'reactjs-popup';
+import Popup from 'reactjs-popup';
 
-//import FAQ from "./FAQ";
+import { useGlobalContext } from "../../../GlobalContext";
+import FAQ from "./FAQ";
 import ProjectDescription from "./ProjectDescription";
 import "../css/controls.css";
+import "../css/popup.css";
 
 const Controls = ({ gridSize, setGridSize, grid, setGrid }) => {
   const { sessionId, ws, setWs, stompClient } = useGlobalContext();
@@ -63,10 +64,6 @@ const Controls = ({ gridSize, setGridSize, grid, setGrid }) => {
     setGridSize(parseInt(e.target.value));
   }
 
-  const handleFAQ = () => {
-    console.log("FAQ");
-  }
-
   const handlePreFill = (e) => {
     const pattern = e.target.value;
     setPatternName(pattern.replace(/_/g, ' '));
@@ -108,9 +105,6 @@ const Controls = ({ gridSize, setGridSize, grid, setGrid }) => {
     });
   }
 
-
-
-
   return (
     <div className="controls">
       <div className="input-container">
@@ -136,6 +130,17 @@ const Controls = ({ gridSize, setGridSize, grid, setGrid }) => {
         <button className="control-button" onClick={stopGame}>Stop</button>
         <button className="control-button" onClick={clearGrid}>Clear</button>
         <button className="control-button" onClick={randomizeGrid}>Randomize</button>
+        <Popup
+          trigger={<button className="control-button">FAQ</button>}
+          modal
+          nested
+        >
+          {(close) => (
+            <div className="modal">
+              <FAQ onClose={close} /> {}
+            </div>
+          )}
+        </Popup>
       </div>
       <div className="description">
         <h2 className="pattern-name">{patternName}</h2>

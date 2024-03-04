@@ -1,0 +1,46 @@
+.faq-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  width: 80%;
+  max-width: 600px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.faq-content {
+  color: #333;
+}
+
+.faq-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.faq-paragraph {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.faq-list {
+  margin-bottom: 10px;
+}
+
+.faq-list li {
+  margin-bottom: 5px;
+}
+
+.faq-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #333;
+}
