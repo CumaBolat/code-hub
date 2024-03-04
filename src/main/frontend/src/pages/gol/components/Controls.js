@@ -1,5 +1,9 @@
 import React from "react";
 import { useGlobalContext } from "../../../GlobalContext";
+//import Popup from 'reactjs-popup';
+
+//import FAQ from "./FAQ";
+import ProjectDescription from "./ProjectDescription";
 import "../css/controls.css";
 
 const Controls = ({ gridSize, setGridSize, grid, setGrid }) => {
@@ -59,6 +63,10 @@ const Controls = ({ gridSize, setGridSize, grid, setGrid }) => {
     setGridSize(parseInt(e.target.value));
   }
 
+  const handleFAQ = () => {
+    console.log("FAQ");
+  }
+
   const handlePreFill = (e) => {
     const pattern = e.target.value;
     setPatternName(pattern.replace(/_/g, ' '));
@@ -74,14 +82,13 @@ const Controls = ({ gridSize, setGridSize, grid, setGrid }) => {
       }
       return response.json();
     })
-    .then(data => {
-      console.log("Data received from backend:", data);
-      setGridSize(data.length);
-      setGrid(data);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+      .then(data => {
+        setGridSize(data.length);
+        setGrid(data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
 
     fetch(`http://localhost:5000/pattern/description?pattern=${pattern}`, {
       method: 'GET',
@@ -95,56 +102,48 @@ const Controls = ({ gridSize, setGridSize, grid, setGrid }) => {
       }
       return response.text();
     }).then(data => {
-      console.log("Data received from backend:", data);
       setPatternDescription(data);
     }).catch((error) => {
       console.error('Error:', error);
     });
   }
-  
-  
-  
+
+
+
 
   return (
     <div className="controls">
-      <div className="control">
+      <div className="input-container">
+        <label htmlFor="speed">Speed:</label>
         <input id="speed" type="range" min="1" max="10" defaultValue={"1"} onChange={handleSpeedChange} />
-        <label htmlFor="speed">Speed</label>
       </div>
-      <div className="control">
+      <div className="input-container">
+        <label htmlFor="gridSize">Grid Size:</label>
         <input id="gridSize" type="range" min="20" max="100" defaultValue={"20"} onChange={handleGridSize} />
-        <label htmlFor="gridSize">Grid Size</label>
       </div>
-      <div className="control">
-        <button onClick={startGame}>Start</button>
-      </div>
-      <div className="control">
-        <button onClick={stopGame}>Stop</button>
-      </div>
-      <div className="control">
-        <button onClick={clearGrid}>Clear</button>
-      </div>
-      <div className="control">
-        <button onClick={randomizeGrid}>Randomize</button>
-      </div>
-      <div className="control"><option hidden disabled selected value> -- select an option -- </option>
+      <div className="options">
+        <label htmlFor="preFill">Patterns:</label>
         <select onChange={handlePreFill}>
-          <option hidden disabled selected value> -- select an option -- </option>
+          <option hidden disabled selected value> Select a Pattern </option>
           <option value="STABLE_REFLECTOR">STABLE_REFLECTOR</option>
           <option value="GUNSTAR">GUNSTAR</option>
           <option value="55P23">55P23</option>
           <option value="232P7H3V0">232P7H3V0</option>
-          <option value="pentadecathlon">Pentadecathlon</option>
-          <option value="beacon">Beacon</option>
-          <option value="gosperglidergun">Gosper Glider Gun</option>
-          <option value="achimsVariant">Achim's Variant</option>
         </select>
+      </div>
+      <div className="control">
+        <button className="control-button" onClick={startGame}>Start</button>
+        <button className="control-button" onClick={stopGame}>Stop</button>
+        <button className="control-button" onClick={clearGrid}>Clear</button>
+        <button className="control-button" onClick={randomizeGrid}>Randomize</button>
       </div>
       <div className="description">
         <h2 className="pattern-name">{patternName}</h2>
         <p className="pattern-description">{patternDescription}</p>
       </div>
+      {ProjectDescription()}
     </div>
+
   );
 }
 

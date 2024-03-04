@@ -23,13 +23,14 @@ function GameOfLife() {
 
   useEffect(() => {
     setGrid(initializeGrid(gridSize));
-    document.body.style.backgroundColor = '#000000';
   }, []);
 
   return (
     <div className='gameoflife'>
-      <h1>Conway's Game of Life</h1>
-      <h2>Made by Cuma Bolat</h2>
+      <div className='game-of-life-header'>
+        <h1>Conway's Game of Life</h1>
+        <h2>Made by Cuma Bolat</h2>
+      </div>
       <div className='contents'>
         <div className='content'>
         <Controls gridSize={gridSize} setGridSize={setGridSize} grid={grid} setGrid={setGrid} />
