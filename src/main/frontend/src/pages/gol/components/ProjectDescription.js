@@ -1,9 +1,9 @@
 import React from "react";
+import "../css/projectdescription.css";
 
 const ProjectDescription = () => {
   return (
-    <div>
-
+    <div className="project-description">
       <h1>Conway's Game of Life (Cellular Automaton)</h1>
       <p>
         While taking Formal Languages and Abstract Machines last year at Mugla Sitki Kocman University,

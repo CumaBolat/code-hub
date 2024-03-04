@@ -56,7 +56,7 @@ public class GameOfLifeController {
   @MessageMapping("/gameoflife/speed")
   public void changeSpeed(SimpMessageHeaderAccessor headerAccessor, int speed) {
     String sessionId = (String) headerAccessor.getSessionAttributes().get("httpSessionId");
-    this.gameSpeeds.put(sessionId, 1000 / speed);
+    this.gameSpeeds.put(sessionId, 2000 / speed);
   }
 
   private void printArray(int[][] arr) {

@@ -1,5 +1,5 @@
 body {
-  background-color: black;
+  background-color: #03051E;
 }
 
 .gameoflife {
@@ -16,6 +16,7 @@ body {
   align-self: flex-start;
   text-align: center;
   flex-direction: column;
+  color: #978D58;
 }
 
 .contents {

@@ -49,7 +49,7 @@ const Controls = ({ gridSize, setGridSize, grid, setGrid }) => {
     for (let i = 0; i < gridSize; i++) {
       const row = [];
       for (let j = 0; j < gridSize; j++) {
-        row.push(Math.random() > 0.7 ? 1 : 0);
+        row.push(Math.random() > 0.85 ? 1 : 0);
       }
       newGrid.push(row);
     }
@@ -109,10 +109,10 @@ const Controls = ({ gridSize, setGridSize, grid, setGrid }) => {
     <div className="controls">
       <div className="input-container">
         <label htmlFor="speed">Speed:</label>
-        <input id="speed" type="range" min="1" max="10" defaultValue={"1"} onChange={handleSpeedChange} />
+        <input id="speed" type="range" min="1" max="20" defaultValue={"1"} onChange={handleSpeedChange} />
       </div>
       <div className="input-container">
-        <label htmlFor="gridSize">Grid Size:</label>
+        <label htmlFor="gridSize">Scale:</label>
         <input id="gridSize" type="range" min="20" max="100" defaultValue={"20"} onChange={handleGridSize} />
       </div>
       <div className="options">
@@ -124,6 +124,10 @@ const Controls = ({ gridSize, setGridSize, grid, setGrid }) => {
           <option value="55P23">55P23</option>
           <option value="232P7H3V0">232P7H3V0</option>
         </select>
+      </div>
+      <div className="description">
+        <h2 className="pattern-name">{patternName}</h2>
+        <p className="pattern-description">{patternDescription}</p>
       </div>
       <div className="control">
         <button className="control-button" onClick={startGame}>Start</button>
@@ -141,10 +145,6 @@ const Controls = ({ gridSize, setGridSize, grid, setGrid }) => {
             </div>
           )}
         </Popup>
-      </div>
-      <div className="description">
-        <h2 className="pattern-name">{patternName}</h2>
-        <p className="pattern-description">{patternDescription}</p>
       </div>
       {ProjectDescription()}
     </div>

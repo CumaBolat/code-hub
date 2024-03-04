@@ -12,11 +12,16 @@
 }
 
 .input-container label {
-  margin-right: auto;
+  font-size: 20px;
+  color: #EAE1E1;
+  width: 90px;
 }
 
 input[type="range"] {
-  background: #ddd;
+  background: #EAE1E1;
+  margin-left: 20px;
+  width: 100%;
+  color: #0B5269;
 }
 
 .control {
@@ -30,15 +35,15 @@ input[type="range"] {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  background-color: #4caf50;
-  color: white;
+  background-color: #0B5269;
+  color: #EDEDED;
   font-size: 16px;
   cursor: pointer;
   flex-grow: 1;
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: #978D58;
 }
 
 .options {
@@ -49,12 +54,13 @@ button:hover {
 .options label {
   margin-right: 10px;
   font-size: 20px;
-  color: white;
+  color: #EAE1E1;
 }
 
 .options select {
   font-size: 16px;
-  background-color: #4caf50;
+  background-color: #0B5269;
+  color: #EDEDED;
   cursor: pointer;
   text-align: center;
 }
@@ -67,9 +73,10 @@ button:hover {
 .pattern-name {
   font-size: 24px;
   margin-bottom: 10px;
+  color: #978D58;
 }
 
 .pattern-description {
   font-size: 20px;
-  color: white;
+  color: #EAE1E1;
 }

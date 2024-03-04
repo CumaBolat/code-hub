@@ -1,0 +1,29 @@
+.project-description {
+  color: #EAE1E1;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.project-description h1 {
+  font-size: 20px;
+  color: #978D58;
+}
+
+.project-description ul {
+  list-style-type: disc;
+  margin-left: 20px;
+  padding-left: 0;
+}
+
+.project-description li {
+  margin-bottom: 3px;
+}
+
+.project-description a {
+  color: #0B5269;
+  text-decoration: none;
+}
+
+.project-description a:hover {
+  text-decoration: underline;
+}
