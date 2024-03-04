@@ -16,6 +16,7 @@ export const GlobalProvider = ({ children }) => {
     const client = Stomp.client('ws://localhost:5000/socket?httpSessionId=' + id);
     client.connect({ "simpSessionId": id }, function (frame) {
       console.log('Connected to WebSocket server');
+      client.debug = () => {};
       setWs(client);
       setStompClient(client);
     });
