@@ -23,6 +23,7 @@ function GameOfLife() {
 
   useEffect(() => {
     setGrid(initializeGrid(gridSize));
+    document.body.style = 'background: #03051E';
   }, []);
 
   return (
