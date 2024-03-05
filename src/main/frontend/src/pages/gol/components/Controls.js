@@ -8,14 +8,13 @@ import "../css/controls.css";
 import "../css/popup.css";
 
 const Controls = ({ gridSize, setGridSize, grid, setGrid }) => {
-  const { sessionId, ws, setWs, stompClient } = useGlobalContext();
+  const { sessionId, ws } = useGlobalContext();
   const [patternName, setPatternName] = useState("");
   const [patternDescription, setPatternDescription] = useState("");
   const [gameStarted, setGameStarted] = useState(false);
   const [selectedPattern, setSelectedPattern] = useState(null);
 
   const startGame = () => {
-    console.log("Start Game");
     if (!ws) {
       console.error('WebSocket connection not established.');
       return;

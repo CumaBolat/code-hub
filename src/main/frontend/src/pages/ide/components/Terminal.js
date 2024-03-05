@@ -56,7 +56,6 @@ function Terminal({ code, getFilesList }) {
     })
       .then(response => {
         if (response.ok) {
-          setIsContainerCreated(true);
           setTimeout(save, 500);
           setTimeout(getFilesList, 750);
         } else {
