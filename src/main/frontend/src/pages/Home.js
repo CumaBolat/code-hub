@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { redirect, useNavigate } from 'react-router-dom';
-import { FaGithub, FaLinkedin, FaEnvelope, FaHackerrank, FaPhone } from 'react-icons/fa'; // Import Font Awesome icons
+import { useNavigate } from 'react-router-dom';
+import { FaGithub, FaLinkedin, FaEnvelope, FaHackerrank } from 'react-icons/fa'; 
 
 import './home.css';
 

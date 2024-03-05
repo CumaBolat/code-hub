@@ -2,16 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../../../GlobalContext";
 
 import "../css/terminal.css";
-import { useNavigate } from 'react-router-dom';
 
 
 function Terminal({ code, getFilesList }) {
-  const { sessionId, ws, setWs, stompClient } = useGlobalContext();
-  const [input, setInput] = useState('');
+  const { sessionId, ws } = useGlobalContext();
+  const [setInput] = useState('');
   const [isConnected, setIsConnected] = useState(false);
   const [subscribe, setSubscribe] = useState(null);
   const [output, setOutput] = useState('Welcome to Online IDE!' + '\n' + '>');
-  const [isContainerCreated, setIsContainerCreated] = useState(false);
   const [commandHistory, setCommandHistory] = useState([]);
   const [historyIndex, setHistoryIndex] = useState(0);
 
@@ -28,7 +26,7 @@ function Terminal({ code, getFilesList }) {
       setOutput(prevOutput => prevOutput + '\n' + 'Already connected to WebSocket\n>');
       return;
     }
-    
+
     const sub = ws.subscribe('/user/' + sessionId + '/editor/output', function (code) {
       setOutput(prevOutput => prevOutput + '\n' + code.body + '\n>');
     });
@@ -191,9 +189,3 @@ function Terminal({ code, getFilesList }) {
 }
 
 export default Terminal;
-
-// guest@notroot: nano deneme.java 
-// guest@notroot: (the user can write commands here but clicks submit)
-// Hello World!
-// guest@notroot: (the user can write commands here)
-// guest@notroot: (the user can write commands here)
