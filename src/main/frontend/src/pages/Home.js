@@ -9,6 +9,8 @@ function LoginRegisterButtons() {
 
   useEffect(() => {
     document.body.style = 'background: white;';
+    document.querySelector("link[rel='icon']").href = 'favicon-home.ico';
+    document.title = "home";
   });
 
   const hanleGameOfLife = async () => {

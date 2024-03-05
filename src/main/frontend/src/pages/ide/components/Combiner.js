@@ -19,6 +19,11 @@ function Combiner() {
   const [code, setCode] = useState(startUpCode);
   const [files, setFiles] = useState([]);
 
+  useEffect (() => {
+    document.querySelector("link[rel='icon']").href = 'favicon-ide.ico';
+    document.title='OnlineIDE';
+  }, []);
+
   const getFilesList = () => {
     fetch('http://localhost:5000/getFilesList',{
       method: 'GET',

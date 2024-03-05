@@ -24,6 +24,8 @@ function GameOfLife() {
   useEffect(() => {
     setGrid(initializeGrid(gridSize));
     document.body.style = 'background: #03051E';
+    document.querySelector("link[rel='icon']").href = 'favicon-gol.ico';
+    document.title = "GameOfLife";
   }, []);
 
   return (
@@ -34,11 +36,11 @@ function GameOfLife() {
       </div>
       <div className='contents'>
         <div className='content'>
-        <Controls gridSize={gridSize} setGridSize={setGridSize} grid={grid} setGrid={setGrid} />
+          <Controls gridSize={gridSize} setGridSize={setGridSize} grid={grid} setGrid={setGrid} />
         </div>
 
         <div className='content'>
-        <Board gridSize={gridSize} grid={grid} setGrid={setGrid} />
+          <Board gridSize={gridSize} grid={grid} setGrid={setGrid} />
         </div>
       </div>
     </div>
