@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Space from 'react-zoomable-ui';
 import Board from './Board';
 import Controls from './Controls';
 

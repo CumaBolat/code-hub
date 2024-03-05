@@ -15,7 +15,7 @@ const startUpCode =
 }`;
 
 function Combiner() {
-  const { sessionId, ws } = useGlobalContext();
+  const { sessionId } = useGlobalContext();
   const [code, setCode] = useState(startUpCode);
   const [files, setFiles] = useState([]);
 

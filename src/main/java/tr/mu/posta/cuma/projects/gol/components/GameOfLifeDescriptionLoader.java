@@ -2,7 +2,6 @@ package tr.mu.posta.cuma.projects.gol.components;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Map;
@@ -25,13 +24,11 @@ public class GameOfLifeDescriptionLoader implements ApplicationRunner {
 
   @Override
   public void run(ApplicationArguments args) throws Exception {
-    System.out.println("Loading descriptions...");
     loadDescriptions();
   }
 
   private void loadDescriptions() throws IOException {
     File descriptionsFolder = new File(this.DESCRIPTON_PATH);
-
     File[] descriptionFiles = descriptionsFolder.listFiles((dir, name) -> name.toLowerCase().endsWith(".txt"));
 
     if (descriptionFiles != null) {

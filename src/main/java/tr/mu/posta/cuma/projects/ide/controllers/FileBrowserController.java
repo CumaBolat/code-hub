@@ -27,6 +27,7 @@ public class FileBrowserController {
   public ResponseEntity<String[]> getFilesList(@RequestHeader("simpSessionId") String sessionId) {
     try {
       String[] files = this.docker.executeTerminalCommand("ls", sessionId).split("\n");
+
       return ResponseEntity.ok(files);
     } catch (Exception e) {
       e.printStackTrace();
@@ -39,6 +40,7 @@ public class FileBrowserController {
       @RequestHeader("simpSessionId") String sessionId) {
     try {
       String fileContent = this.docker.executeTerminalCommand("cat " + fileName, sessionId);
+
       return ResponseEntity.ok(fileContent);
     } catch (Exception e) {
       e.printStackTrace();
@@ -52,7 +54,9 @@ public class FileBrowserController {
     try {
       String className = getClassName(fileName);
       String code = codeInitializer(className);
+
       docker.saveJavaCode(code, className, sessionId);
+
       return ResponseEntity.ok(code);
     } catch (Exception e) {
       e.printStackTrace();
@@ -76,6 +80,7 @@ public class FileBrowserController {
 
   private String getClassName(String fileName) {
     String[] splittedFileName = fileName.split("\\.");
+
     return splittedFileName[0].replace("\"", "");
   }
 }
