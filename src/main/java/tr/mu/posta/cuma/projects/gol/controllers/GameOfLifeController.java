@@ -29,7 +29,6 @@ public class GameOfLifeController {
   @SendToUser("/gameoflife/output")
   public void startGame(SimpMessageHeaderAccessor headerAccessor, int[][] grid) {
     String sessionId = (String) headerAccessor.getSessionAttributes().get("httpSessionId");
-
     this.gameStates.put(sessionId, true);
 
     int gridSize = grid.length + this.INVISIBLE_PADDING_SIZE;
@@ -50,21 +49,14 @@ public class GameOfLifeController {
   @MessageMapping("/gameoflife/stop")
   public void stopGame(SimpMessageHeaderAccessor headerAccessor) {
     String sessionId = (String) headerAccessor.getSessionAttributes().get("httpSessionId");
+
     this.gameStates.put(sessionId, false);
   }
 
   @MessageMapping("/gameoflife/speed")
   public void changeSpeed(SimpMessageHeaderAccessor headerAccessor, int speed) {
     String sessionId = (String) headerAccessor.getSessionAttributes().get("httpSessionId");
-    this.gameSpeeds.put(sessionId, 2000 / speed);
-  }
 
-  private void printArray(int[][] arr) {
-    for (int i = 0; i < arr.length; i++) {
-      for (int j = 0; j < arr[i].length; j++) {
-        System.out.print(arr[i][j]);
-      }
-      System.out.println();
-    }
+    this.gameSpeeds.put(sessionId, 2000 / speed);
   }
 }
