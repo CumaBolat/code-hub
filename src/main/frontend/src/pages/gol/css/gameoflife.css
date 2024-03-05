@@ -32,12 +32,14 @@ body {
   margin-top: 15px;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1300px) {
   .contents {
     flex-direction: column;
+    margin-left: 100px;
   }
 
   .game-of-life-header {
     width: 100%;
+    align-items: center;
   }
 }
