@@ -8,8 +8,6 @@ public class GeneralCommandBuilder implements CommandBuilder {
 
   private StringBuilder command = new StringBuilder();
 
-  // ls -al && cd ..
-
   public String buildSecureCommand(String command) {
     command = command.trim();
 
@@ -17,12 +15,12 @@ public class GeneralCommandBuilder implements CommandBuilder {
 
     for (int i = 0; i < commandParts.length; i++) {
       String commandPart = commandParts[i];
-      String trimmedCommandPart = commandPart.trim().replace("\"" , "");
+      String trimmedCommandPart = commandPart.trim().replace("\"", "");
       String[] commandPartParts = trimmedCommandPart.split(" ");
       String commandName = commandPartParts[0].trim();
-      String[] commandArgs = commandPartParts.length > 1 ? 
-                                Arrays.copyOfRange(commandPartParts, 1, commandPartParts.length)
-                                : new String[0];
+      String[] commandArgs = commandPartParts.length > 1
+          ? Arrays.copyOfRange(commandPartParts, 1, commandPartParts.length)
+          : new String[0];
 
       if (this.unAllowedCommand(commandName)) {
         this.clearCommand();
@@ -52,10 +50,12 @@ public class GeneralCommandBuilder implements CommandBuilder {
           return commandName + ": command not found!";
       }
 
-      if ( commandParts.length == 1 || i == commandParts.length - 1 ) continue;
+      if (commandParts.length == 1 || i == commandParts.length - 1)
+        continue;
 
       this.and();
     }
+
     String result = this.command.toString();
     this.clearCommand();
 

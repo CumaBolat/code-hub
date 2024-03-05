@@ -10,12 +10,14 @@ public class Docker {
 
   public void createUserWorkspace(String sessionId) {
     String command = "mkdir " + sessionId;
+
     this.userWorkSpaceName = sessionId;
     this.shellCommandExecutor.executeShellCommand(command, sessionId);
   }
 
   public void removeUserWorkspace(String sessionId) {
     String command = "rm -rf " + sessionId;
+
     this.shellCommandExecutor.executeShellCommand(command, this.userWorkSpaceName);
   }
 
@@ -23,6 +25,7 @@ public class Docker {
     String dockerCommand = this.enterUserWorkspace(sessionId) + " echo '"
         + code + "' > " + className + ".java && javac " + className
         + ".java && java " + className;
+
     return this.shellCommandExecutor.executeShellCommand(dockerCommand, sessionId);
   }
 
@@ -35,6 +38,7 @@ public class Docker {
 
   public String executeTerminalCommand(String command, String sessionId) {
     String dockerCommand = this.enterUserWorkspace(sessionId) + command;
+
     return this.shellCommandExecutor.executeShellCommand(dockerCommand, sessionId);
   }
 
