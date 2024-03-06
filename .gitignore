@@ -4,7 +4,6 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 src/main/java/tr/mu/posta/cuma/projects/gol/patterns/*
-src/main/frontend/src/pages/images/*
 
 ### STS ###
 .apt_generated
