@@ -16,13 +16,13 @@ Feel free to browse through the code, explore the projects, and dive into the kn
   * [Installation](#installation)
 * [Game Of Life](#game-of-life)
   * [Getting Started](#getting-started-with-game-of-life)
-  * [Key Features](#key-features-of-game-of-life)
+  * [Key Features](#features-of-game-of-life)
   * [Future Plans](#future-plans-for-game-of-life)
 * [OnlineIDE](#onlineide)
   * [Getting Started](#getting-started-with-onlineide)
   * [Key Features](#key-features-of-onlineide)
   * [Future Plans](#future-plans-for-onlineide)
-* [Contributing](#contributions)
+* [Contributing](#contributing)
 * [License](#license)
 
 ## Screenshots
@@ -31,10 +31,10 @@ Feel free to browse through the code, explore the projects, and dive into the kn
 
 ![Home](/src/main/frontend/src/pages/images/home.png)
 
-#### Game Of Life
+#### GameOfLife
 ![Game Of Life](/src/main/frontend/src/pages/images/gol.png)
 
-#### OnlineIDE
+#### Online IDE
 
 ![OnlineIDE](/src/main/frontend/src/pages/images/ide.png)
 
