@@ -43,11 +43,13 @@ Feel free to browse through the code, explore the projects, and dive into the kn
 
 I initiated this project to enhance my front-end skills and gain hands-on experience with AWS. Along the way, I faced a lot of challenges such as user sessions, CORS, and WebSocket Configurations. I also had to find a way to execute terminal commands sent from the users safely. Last but not least, AWS charged me even for the free tier (they said T2.nano instances were free - it wasn't).
 
-In a nutshell, this project was my playground for overcoming challenges, enhancing my front-end proficiency, and creating a In a nutshell, this project was my playground for overcoming challenges, enhancing my front-end proficiency, and creating a user-friendly coding space in OnlineIDE. User-friendly coding space in OnlineIDE.
+In a nutshell, this project was my playground for overcoming challenges, enhancing my front-end proficiency and creating user-friendly web applications to improve my portfolio.
 
 ## Built With
 
-Every project in this repo is built with the same technologies ("Inte­lect is a magnitude of intensity, not a magnitude of extensity." -Schopenhauer). 
+Every project in this repo is built with the same technologies.
+
+**"Inte­lect is a magnitude of intensity, not a magnitude of extensity." -Schopenhauer**
 
 **Backend:**
 - Java (17)
